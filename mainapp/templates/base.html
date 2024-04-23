@@ -3,19 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>{% block title %}My Blog{% endblock %}</title>
 </head>
 <body>
     <header>
-         <H1> Witamy na naszej stronie</H1>
-    <p> Na tej stronie bedzie caly blogg</p>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">SuperMegaKozackiBlog.com</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item text-white">
+                    <a class="nav-link text-white font-weight-bold" href="#">Zakładka1</a>
+                </li>
+                <li class="nav-item text-white">
+                    <a class="nav-link text-white font-weight-bold" href="#">Zakładka2</a>
+                </li>
+                <li class="nav-item text-white">
+                    <a class="nav-link text-white font-weight-bold" href="#">Zakładka3</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+         <h1 style="text-align: center;" >Witamy na naszej stronie</h1>
+    <p style="text-align: center;" >Na tej stronie bedzie caly blogg</p>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
     <footer>
-           <p> Uga buga</p>
+           <p> Uga bugaa</p>
     </footer>
 </body>
 </html>
