@@ -10,6 +10,8 @@ class User(models.Model):
     role = models.CharField(max_length=255)
 
 
+
+
 class Blog(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     date_of_creation = models.DateField()
