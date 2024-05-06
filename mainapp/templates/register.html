@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Moj profil</title>
-         <h1>Tu bedzie Rejestracja</h1>
+         <h1>Zarejestruj nowego użytkownika</h1>
+         <form class="form-with-validation" action="/register/"
+         " method="post">
+           {% csrf_token %}
+           {{ form }}
+           <button class="form-submit">Submit</button>
+         </form>
 </head>
 <body>
 
