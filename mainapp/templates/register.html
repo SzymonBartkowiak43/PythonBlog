@@ -2,16 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Moj profil</title>
-         <h1>Zarejestruj nowego użytkownika</h1>
-         <form class="form-with-validation" action="/register/"
-         " method="post">
-           {% csrf_token %}
-           {{ form }}
-           <button class="form-submit">Submit</button>
-         </form>
+    <title>Mój profil</title>
 </head>
 <body>
-
+    <h1>Zarejestruj nowego użytkownika</h1>
+    <form class="form-with-validation" action="/register/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="form-submit" type="submit">Zatwierdź</button>
+    </form>
 </body>
 </html>

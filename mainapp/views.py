@@ -1,37 +1,42 @@
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.http import *
+
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from .models import User
+from .forms import CustomUserCreationForm
+
 
 def homepage(request):
-
     return render(request, "home.html")
+
 
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/login')
+            return redirect('login')
     else:
-        form = UserCreationForm()
-    return render(request, "register.html", { "form": form})
+        form = CustomUserCreationForm()
+    return render(request, "register.html", {"form": form})
 
-def login(request):
-    if request.method == "POST":
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            # login(request, form.get_user())
-            # if 'next' in request.POST:
-            #     return redirect(request.POST.get('next'))
-            # else:
-            return redirect("posts:list")
+
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('homepage')
+        else:
+            return redirect('login')
     else:
-        form = AuthenticationForm()
-    return render(request, "login.html", { "form": form })
-
-# def logout_view(request):
-#     if request.method == "POST":
-#         logout(request)
-#         return redirect("posts:list")
+        return render(request, "login.html")
 
 
+
+def logout_view(request):
+    logout(request)
+    return redirect('homepage')
