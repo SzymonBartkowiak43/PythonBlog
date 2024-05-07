@@ -1,48 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-    <title>{% block title %}My Blog{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <title>{% block title %}Mój Blog{% endblock %}</title>
 </head>
 <body>
     <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="{% url 'homepage' %}">SuperMegaKozackiBlog.com</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item text-white">
-                    {% if user.is_authenticated %}
-                        <a class="nav-link text-white font-weight-bold" href="{% url 'logout' %}">Wyloguj</a>
-                    {% else %}
-                        <a class="nav-link text-white font-weight-bold" href="{% url 'login' %}">Logowanie</a>
-                    {% endif %}
-                </li>
-                <li class="nav-item text-white">
-                    {% if user.is_authenticated %}
-                    {% else %}
-                    <a class="nav-link text-white font-weight-bold" href="{% url 'register' %}">Register</a>
-                    {% endif %}
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-         <h1 style="text-align: center;" >Witamy na naszej stronie</h1>
-    <p style="text-align: center;" >Na tej stronie bedzie caly blogg</p>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'homepage' %}">SuperMegaKozackiBlog.com</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item text-white">
+                                <a class="nav-link text-white font-weight-bold" href="{% url 'logout' %}">Wyloguj</a>
+                            </li>
+                            <li class="nav-item text-white">
+                                <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                            </li>
+                        {% else %}
+                            <li class="nav-item text-white">
+                                <a class="nav-link text-white font-weight-bold" href="{% url 'login' %}">Logowanie</a>
+                            </li>
+                            <li class="nav-item text-white">
+                                <a class="nav-link text-white font-weight-bold" href="{% url 'register' %}">Rejestracja</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 style="text-align: center;">Witamy na naszej stronie</h1>
+        <p style="text-align: center;">Na tej stronie będzie cały blog</p>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
     <footer>
-           <p> Uga bugaa</p>
+        <p>Uga bugaa</p>
     </footer>
 </body>
 </html>
