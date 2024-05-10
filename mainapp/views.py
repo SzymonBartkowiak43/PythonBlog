@@ -4,7 +4,8 @@ from django.http import *
 
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from .models import User
-from .forms import CustomUserCreationForm, utworz_blogForm
+from .forms import CustomUserCreationForm, BlogCreationForm
+from django.contrib.auth.decorators import login_required
 
 
 def homepage(request):
@@ -35,17 +36,17 @@ def login_view(request):
     else:
         return render(request, "login.html")
 
-
-def utworz_blog_widok(request):
+@login_required
+def BlogCreationView(request):
     if request.method == "POST":
-        form = utworz_blogForm(request.POST)
+        form = BlogCreationForm(request.POST)
         if form.is_valid():
             blog = form.save(commit=False)
-            blog.owner = request.user.get()
+            blog.owner = request.user
             blog.save()
             return redirect('homepage')
     else:
-        form = utworz_blogForm()
+        form = BlogCreationForm()
     return render(request, "utworz_blog.html", {"form": form})
 
 def logout_view(request):

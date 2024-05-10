@@ -2,16 +2,14 @@ from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
-class User(models.Model):
-    username = models.CharField(max_length=100)
-    password = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     age = models.IntegerField()
-    date_of_registration = models.DateField()
+    date_of_registration = models.DateTimeField(auto_now_add=True)
     role = models.CharField(max_length=255)
 class Blog(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_of_creation = models.DateTimeField(default=timezone.now)
+    date_of_creation = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1000)
 
