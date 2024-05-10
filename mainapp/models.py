@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -10,7 +11,7 @@ class User(models.Model):
     role = models.CharField(max_length=255)
 class Blog(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    date_of_creation = models.DateField()
+    date_of_creation = models.DateTimeField(default=timezone.now)
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1000)
 
