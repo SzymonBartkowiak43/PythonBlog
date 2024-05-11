@@ -73,8 +73,9 @@ def logout_view(request):
     logout(request)
     return redirect('homepage')
 
+@login_required
 def add_post(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
+    blog = get_object_or_404(Blog, pk=blog_id, author=request.user)
     if request.method == 'POST':
         form = PostCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -82,10 +83,11 @@ def add_post(request, blog_id):
             post.author = request.user
             post.blog = blog
             post.save()
-            return redirect('blog_details', blog_id=blog_id)
+            return redirect('blog_details', pk=blog_id)
     else:
         form = PostCreationForm()
-    return render(request, 'add_post.html', {'form': form})
+    return render(request, 'add_post.html', {'form': form, 'blog': blog})
+
 
 def add_comment(request, post_id):
     if request.method == 'POST':
