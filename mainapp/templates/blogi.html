@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <title>Lista Blogów</title>
+</head>
+<body>
+    <h1>Lista Blogów</h1>
+    <ul>
+        {% for blog in blogs %}
+            <li>
+                <h2><a href="{% url 'blog_details' blog.id %}">{{ blog.title }}</a></h2>
+                <p>{{ blog.description }}</p>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych blogów.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
