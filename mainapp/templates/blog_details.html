@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <title>Szczegóły bloga</title>
+</head>
+<body>
+    <h2>Szczegóły bloga</h2>
+    <h3>{{ blog.title }}</h3>
+    <p>{{ blog.description }}</p>
+    <p>Właściciel: {{ blog.owner }}</p>
+    <p>Data utworzenia: {{ blog.date_of_creation }}</p>
+
+    <h3>Posty:</h3>
+    <ul>
+        {% for post in posts %}
+            <li>
+                <h4>{{ post.title }}</h4>
+                <p>{{ post.content }}</p>
+                <p>Autor: {{ post.author }}</p>
+                <p>Data dodania: {{ post.date_of_creation }}</p>
+                {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image">
+                {% endif %}
+                <h5>Komentarze:</h5>
+                <ul>
+                    {% for comment in post.comments.all %}
+                        <li>
+                            <p>{{ comment.content }}</p>
+                            <p>Autor: {{ comment.author }}</p>
+                            <p>Data dodania: {{ comment.date_of_creation }}</p>
+                        </li>
+                    {% empty %}
+                        <li>Brak komentarzy.</li>
+                    {% endfor %}
+                </ul>
+                <h5>Dodaj komentarz</h5>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit">Dodaj komentarz</button>
+                </form>
+            </li>
+        {% empty %}
+            <li>Brak postów.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Dodaj nowy post</h3>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ post_form.as_p }}
+        <button type="submit">Dodaj post</button>
+    </form>
+</body>
+</html>

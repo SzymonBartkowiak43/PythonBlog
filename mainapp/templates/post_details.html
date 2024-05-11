@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły posta</title>
+</head>
+<body>
+    <h2>Szczegóły posta</h2>
+    <h3>{{ post.title }}</h3>
+    <p>{{ post.content }}</p>
+    <p>Autor: {{ post.author }}</p>
+    <p>Data dodania: {{ post.date_of_creation }}</p>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post Image">
+    {% endif %}
+
+    <h3>Komentarze:</h3>
+    <ul>
+        {% for comment in comments %}
+            <li>
+                <p>{{ comment.content }}</p>
+                <p>Autor: {{ comment.author }}</p>
+                <p>Data dodania: {{ comment.date_of_creation }}</p>
+            </li>
+        {% empty %}
+            <li>Brak komentarzy.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Dodaj komentarz</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Dodaj komentarz</button>
+    </form>
+</body>
+</html>
