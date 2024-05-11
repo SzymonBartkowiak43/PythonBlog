@@ -3,5 +3,9 @@
   <component name="Black">
     <option name="sdkName" value="Python 3.10 (blogi)" />
   </component>
+<<<<<<< HEAD
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.10 (blogi)" project-jdk-type="Python SDK" />
+=======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.12 (PycharmProjectsKOKS)" project-jdk-type="Python SDK" />
+>>>>>>> bf7ec7e43ada18e1c5a0bf8631f28fa01e115895
 </project>

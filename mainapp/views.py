@@ -73,7 +73,6 @@ def logout_view(request):
     logout(request)
     return redirect('homepage')
 
-
 def add_post(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     if request.method == 'POST':
@@ -87,7 +86,6 @@ def add_post(request, blog_id):
     else:
         form = PostCreationForm()
     return render(request, 'add_post.html', {'form': form})
-
 
 def add_comment(request, post_id):
     if request.method == 'POST':
