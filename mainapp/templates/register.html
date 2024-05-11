@@ -6,14 +6,13 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-    <title>Mój profil</title>
 </head>
 <body>
-    <h1>Zarejestruj nowego użytkownika</h1>
+    <h1>Register new user</h1>
     <form class="form-with-validation" action="/register/" method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button class="form-submit" type="submit">Zatwierdź</button>
+        <button class="form-submit" type="submit">Confirm</button>
     </form>
 </body>
 </html>
