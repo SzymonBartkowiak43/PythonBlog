@@ -55,6 +55,7 @@ def BlogCreationView(request):
 def blog_details(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     posts = Post.objects.filter(blog=blog)
+
     if request.method == 'POST':
         post_form = PostCreationForm(request.POST, request.FILES)
         if post_form.is_valid():
@@ -67,6 +68,7 @@ def blog_details(request, blog_id):
         post_form = PostCreationForm()
     comment_form = CommentCreationForm()
     return render(request, 'blog_details.html', {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
+
 
 def blog_password(request):
     return render(request, 'blog_password.html')
