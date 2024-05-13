@@ -53,18 +53,34 @@ def BlogCreationView(request):
     return render(request, "utworz_blog.html", {"form": form})
 
 
-def blog_details(request, pk):
-    # Pobranie bloga z bazy danych na podstawie jego id
-    blog = get_object_or_404(Blog, pk=pk)
-
+@login_required
+def blog_details(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+    posts = Post.objects.filter(blog=blog)
 
     if blog.is_private:
-        if request.method == 'POST':
-            password = request.POST.get('password')
-            if password == blog.password:
-                return render(request, 'blog_details.html', {'blog': blog})
-        return render(request, 'blog_password.html', {'blog_id': pk})
-    return render(request, 'blog_details.html', {'blog': blog})
+        # Sprawdź, czy użytkownik jest zalogowany
+        if not request.user.is_authenticated:
+            return redirect('blog_password')
+        else:
+            # Użytkownik jest zalogowany, sprawdź, czy ma dostęp do bloga
+            if blog.owner != request.user:
+                return redirect('blog_password')
+
+    if request.method == 'POST':
+        post_form = PostCreationForm(request.POST, request.FILES)
+        if post_form.is_valid():
+            post = post_form.save(commit=False)
+            post.author = request.user
+            post.blog = blog
+            post.save()
+            return redirect('blog_details', blog_id=blog_id)
+    else:
+        post_form = PostCreationForm()
+    comment_form = CommentCreationForm()
+    return render(request, 'blog_details.html',
+                  {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
+
 
 def blog_password(request):
     return render(request, 'blog_password.html')
