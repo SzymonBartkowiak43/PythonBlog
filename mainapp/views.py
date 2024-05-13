@@ -53,12 +53,16 @@ def BlogCreationView(request):
     return render(request, "utworz_blog.html", {"form": form})
 
 
+<<<<<<< HEAD
 @login_required
+=======
+>>>>>>> be48917a3ef6b040912d88ed2955c9857f04b1f1
 def blog_details(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
     posts = Post.objects.filter(blog=blog)
 
     if blog.is_private:
+<<<<<<< HEAD
         # Sprawdź, czy użytkownik jest zalogowany
         if not request.user.is_authenticated:
             return redirect('blog_password')
@@ -66,6 +70,11 @@ def blog_details(request, blog_id):
             # Użytkownik jest zalogowany, sprawdź, czy ma dostęp do bloga
             if blog.owner != request.user:
                 return redirect('blog_password')
+=======
+        password = request.POST.get('password')
+        if password != blog.password:
+            return render(request, 'blog_password.html', {'blog_id': blog_id})
+>>>>>>> be48917a3ef6b040912d88ed2955c9857f04b1f1
 
     if request.method == 'POST':
         post_form = PostCreationForm(request.POST, request.FILES)
@@ -77,10 +86,17 @@ def blog_details(request, blog_id):
             return redirect('blog_details', blog_id=blog_id)
     else:
         post_form = PostCreationForm()
+<<<<<<< HEAD
     comment_form = CommentCreationForm()
     return render(request, 'blog_details.html',
                   {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
 
+=======
+
+    comment_form = CommentCreationForm()
+    return render(request, 'blog_details.html',
+                  {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
+>>>>>>> be48917a3ef6b040912d88ed2955c9857f04b1f1
 
 def blog_password(request):
     return render(request, 'blog_password.html')
@@ -89,8 +105,9 @@ def logout_view(request):
     logout(request)
     return redirect('homepage')
 
+@login_required
 def add_post(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id)
+    blog = get_object_or_404(Blog, pk=blog_id, author=request.user)
     if request.method == 'POST':
         form = PostCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -98,10 +115,11 @@ def add_post(request, blog_id):
             post.author = request.user
             post.blog = blog
             post.save()
-            return redirect('blog_details', blog_id=blog_id)
+            return redirect('blog_details', pk=blog_id)
     else:
         form = PostCreationForm()
-    return render(request, 'add_post.html', {'form': form})
+    return render(request, 'add_post.html', {'form': form, 'blog': blog})
+
 
 def add_comment(request, post_id):
     if request.method == 'POST':
