@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>Szczegóły bloga</title>
 </head>
 <body>
@@ -47,12 +47,8 @@
             <li>Brak postów.</li>
         {% endfor %}
     </ul>
-
-    <h3>Dodaj nowy post</h3>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ post_form.as_p }}
-        <button type="submit">Dodaj post</button>
-    </form>
+    <div class="container_button">
+        <a class="button_1" href="{% url 'add_post' blog_id=blog.id %}" >Dodaj Post</a>
+    </div>
 </body>
 </html>

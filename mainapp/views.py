@@ -60,12 +60,9 @@ def blog_details(request, blog_id):
     posts = Post.objects.filter(blog=blog)
 
     if blog.is_private:
-
-        # Sprawdź, czy użytkownik jest zalogowany
         if not request.user.is_authenticated:
             return redirect('blog_password')
         else:
-            # Użytkownik jest zalogowany, sprawdź, czy ma dostęp do bloga
             if blog.owner != request.user:
                 return redirect('blog_password')
 
@@ -73,27 +70,10 @@ def blog_details(request, blog_id):
         if password != blog.password:
             return render(request, 'blog_password.html', {'blog_id': blog_id})
 
-
-    if request.method == 'POST':
-        post_form = PostCreationForm(request.POST, request.FILES)
-        if post_form.is_valid():
-            post = post_form.save(commit=False)
-            post.author = request.user
-            post.blog = blog
-            post.save()
-            return redirect('blog_details', blog_id=blog_id)
-    else:
-        post_form = PostCreationForm()
-
     comment_form = CommentCreationForm()
     return render(request, 'blog_details.html',
-                  {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
+                  {'blog': blog, 'posts': posts, 'comment_form': comment_form})
 
-
-
-    comment_form = CommentCreationForm()
-    return render(request, 'blog_details.html',
-                  {'blog': blog, 'posts': posts, 'post_form': post_form, 'comment_form': comment_form})
 
 
 def blog_password(request):
@@ -105,7 +85,7 @@ def logout_view(request):
 
 @login_required
 def add_post(request, blog_id):
-    blog = get_object_or_404(Blog, pk=blog_id, author=request.user)
+    blog = get_object_or_404(Blog, pk=blog_id)
     if request.method == 'POST':
         form = PostCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -113,7 +93,7 @@ def add_post(request, blog_id):
             post.author = request.user
             post.blog = blog
             post.save()
-            return redirect('blog_details', pk=blog_id)
+            return redirect('blog_details', blog_id=blog_id)
     else:
         form = PostCreationForm()
     return render(request, 'add_post.html', {'form': form, 'blog': blog})
