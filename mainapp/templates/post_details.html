@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>Szczegóły posta</title>
 </head>
 <body>
-    <h2>Szczegóły posta</h2>
-    <h3>{{ post.title }}</h3>
+    <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
     <p>Autor: {{ post.author }}</p>
     <p>Data dodania: {{ post.date_of_creation }}</p>
     {% if post.image %}
         <img src="{{ post.image.url }}" alt="Post Image">
     {% endif %}
-
-    <h3>Komentarze:</h3>
+    <h3>Komentarze</h3>
     <ul>
         {% for comment in comments %}
             <li>
@@ -27,9 +26,8 @@
             <li>Brak komentarzy.</li>
         {% endfor %}
     </ul>
-
     <h3>Dodaj komentarz</h3>
-    <form method="post">
+    <form method="post" action="">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Dodaj komentarz</button>

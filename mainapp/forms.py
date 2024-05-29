@@ -58,5 +58,7 @@ class PostCreationForm(forms.ModelForm):
 class CommentCreationForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('content',)
-        widgets = {'author': forms.HiddenInput(), 'post': forms.HiddenInput()}
+        fields = ['content']
+        widgets = {
+            'content': forms.TextInput(attrs={'placeholder': 'form'})
+        }
