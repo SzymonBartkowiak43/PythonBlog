@@ -17,31 +17,13 @@
     <ul>
         {% for post in posts %}
             <li>
-                <h4>{{ post.title }}</h4>
+                <h2><a href="{% url 'post_details' post.id %}">{{ post.title }}</a></h2>
                 <p>{{ post.content }}</p>
                 <p>Autor: {{ post.author }}</p>
                 <p>Data dodania: {{ post.date_of_creation }}</p>
                 {% if post.image %}
                     <img src="{{ post.image.url }}" alt="Post Image">
                 {% endif %}
-                <h5>Komentarze:</h5>
-                <ul>
-                    {% for comment in post.comments.all %}
-                        <li>
-                            <p>{{ comment.content }}</p>
-                            <p>Autor: {{ comment.author }}</p>
-                            <p>Data dodania: {{ comment.date_of_creation }}</p>
-                        </li>
-                    {% empty %}
-                        <li>Brak komentarzy.</li>
-                    {% endfor %}
-                </ul>
-                <h5>Dodaj komentarz</h5>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
-                    <button type="submit">Dodaj komentarz</button>
-                </form>
             </li>
         {% empty %}
             <li>Brak postów.</li>

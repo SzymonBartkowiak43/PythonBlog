@@ -60,5 +60,7 @@ class CommentCreationForm(forms.ModelForm):
         model = Comment
         fields = ['content']
         widgets = {
-            'content': forms.TextInput(attrs={'placeholder': 'form'})
+            'content': forms.TextInput(attrs={'placeholder': 'Dodaj komentarz'})
         }
+
+

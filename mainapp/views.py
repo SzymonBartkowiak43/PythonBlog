@@ -101,16 +101,14 @@ def add_post(request, blog_id):
     return render(request, 'add_post.html', {'form': form, 'blog': blog})
 
 
-
 def post_details(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
-    comments = post.comments.orderby('date_posted')
+    comments = post.comments.order_by('date_of_creation')
     form = CommentCreationForm()
     if request.method == 'POST':
         form = CommentCreationForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
-            print(comment.content)
             comment.author = request.user
             comment.post = post
             comment.save()
@@ -118,4 +116,5 @@ def post_details(request, post_id):
     return render(request, 'post_details.html', {
         'post': post, 'comments': comments, 'form': form
     })
+
 
