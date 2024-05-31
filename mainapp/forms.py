@@ -15,12 +15,18 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class BlogCreationForm(forms.ModelForm):
-    is_private = forms.BooleanField(label="Should this blog be private", required=False)
-    password = forms.CharField(label="Password for blog", max_length=128, required=False, widget=forms.PasswordInput)
-
     class Meta:
         model = Blog
         fields = ('title', 'description')
+
+
+class PostCreationForm(forms.ModelForm):
+    is_private = forms.BooleanField(label="Should this post be private", required=False)
+    password = forms.CharField(label="Password for post", max_length=128, required=False, widget=forms.PasswordInput)
+
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -47,18 +53,10 @@ class BlogCreationForm(forms.ModelForm):
             instance.save()
         return instance
 
-class PostCreationForm(forms.ModelForm):
-    class Meta:
-        model = Post
-        fields = ['title', 'content', 'visibility', 'password', 'image']
-        widgets = {
-            'password': forms.PasswordInput(),
-        }
-
 class CommentCreationForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['content']
+        fields = ['content', 'image']
         widgets = {
             'content': forms.TextInput(attrs={'placeholder': 'Dodaj komentarz'})
         }

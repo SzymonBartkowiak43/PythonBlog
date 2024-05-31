@@ -12,20 +12,14 @@ class Blog(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=255)
     description = models.TextField(max_length=1000)
-    is_private = models.BooleanField(default=False)
-    password = models.CharField(max_length=128, blank=True, null=True)
 
 class Post(models.Model):
-    VISIBILITY_CHOICES = (
-        ('public', 'Publiczny'),
-        ('private', 'Prywatny'),
-    )
     title = models.CharField(max_length=255)
     content = models.TextField(max_length=2000)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_of_creation = models.DateTimeField(auto_now_add=True)
-    visibility = models.CharField(max_length=20)
     password = models.CharField(max_length=255, null=True, blank=True)
+    is_private = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images/', null=True, blank=True)
     blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
 
@@ -33,6 +27,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
+    image = models.ImageField(upload_to='images/', null=True, blank=True)
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
 

@@ -13,6 +13,11 @@
     <p>Właściciel: {{ blog.owner }}</p>
     <p>Data utworzenia: {{ blog.date_of_creation }}</p>
 
+    <div class="container_button">
+        <a class="button_1" href="{% url 'add_post' blog_id=blog.id %}" >Dodaj Post</a>
+    </div>
+
+
     <h3>Posty:</h3>
     <ul>
         {% for post in posts %}
@@ -29,8 +34,6 @@
             <li>Brak postów.</li>
         {% endfor %}
     </ul>
-    <div class="container_button">
-        <a class="button_1" href="{% url 'add_post' blog_id=blog.id %}" >Dodaj Post</a>
-    </div>
+
 </body>
 </html>

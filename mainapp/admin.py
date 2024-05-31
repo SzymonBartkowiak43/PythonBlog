@@ -20,27 +20,24 @@ class ProfileAdmin(admin.ModelAdmin):
     readonly_fields = ('date_of_registration',)
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = ('owner', 'title', 'date_of_creation', 'is_private')
+    list_display = ('owner', 'title', 'date_of_creation')
     search_fields = ('title', 'owner__username')
-    list_filter = ('is_private', 'date_of_creation')
+    list_filter = ['date_of_creation']
     fieldsets = (
         (None, {
-            'fields': ('owner', 'title', 'description', 'is_private')
-        }),
-        ('Security', {
-            'classes': ('collapse',),
-            'fields': ('password',)
+            'fields': ('owner', 'title', 'description')
         }),
     )
     readonly_fields = ('date_of_creation',)
 
+
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'date_of_creation', 'visibility', 'blog')
+    list_display = ('title', 'author', 'date_of_creation', 'blog')
     search_fields = ('title', 'author__username', 'blog__title')
-    list_filter = ('visibility', 'date_of_creation', 'blog')
+    list_filter = ('date_of_creation', 'blog')
     fieldsets = (
         (None, {
-            'fields': ('title', 'content', 'author', 'blog', 'visibility')
+            'fields': ('title', 'content', 'author', 'blog')
         }),
         ('Optional Fields', {
             'classes': ('collapse',),

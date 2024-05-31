@@ -8,8 +8,8 @@ urlpatterns = [
     path('crtblog/', views.BlogCreationView, name='utworz_blog'),
     path('addpost/<int:blog_id>/', views.add_post, name='add_post'),
     path('post/<int:post_id>/', views.post_details, name='post_details'),
+    path('post_password/<int:post_id>/', views.post_password, name='post_password'),
     path('blogs/<int:blog_id>/', views.blog_details, name='blog_details'),
-    path('blogpassword/', views.blog_password, name='blog_password'),
     path('blogs/', views.blogs, name='blogs'),
     path('logout/', views.logout_view, name='logout'),
 ]
