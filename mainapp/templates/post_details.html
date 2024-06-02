@@ -1,3 +1,4 @@
+<!-- post_details.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,43 +8,41 @@
     <title>Szczegóły posta</title>
 </head>
 <body>
-    <div class="container">
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
-        <p>Autor: {{ post.author }}</p>
-        <p>Data dodania: {{ post.date_of_creation }}</p>
-        {% if post.image %}
-            <img src="{{ post.image.url }}" alt="Post Image">
-        {% endif %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+    <p>Autor: {{ post.author }}</p>
+    <p>Data utworzenia: {{ post.date_of_creation }}</p>
+    {% if post.image %}
+        <img src="{{ post.image.url }}" alt="Post image">
+    {% endif %}
 
-        <h3>Komentarze:</h3>
-        <ul>
-            {% for comment in comments %}
-                <li>
-                    <p>{{ comment.author }}: {{ comment.content }}</p>
-                    <p>Data dodania: {{ comment.date_of_creation }}</p>
-                    {% if comment.image %}
-                        <img src="{{ comment.image.url }}" alt="Comment Image">
-                    {% endif %}
-                </li>
-            {% empty %}
-                <li>Brak komentarzy.</li>
-            {% endfor %}
-        </ul>
+    {% if request.user == post.author %}
+        <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
+        <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
+    {% endif %}
 
-        <h4>Dodaj komentarz:</h4>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="content">Komentarz:</label>
-                <textarea name="content" id="content" class="form-control" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="image">Zdjęcie (opcjonalnie):</label>
-                <input type="file" name="image" id="image" class="form-control-file">
-            </div>
-            <button type="submit" class="btn btn-primary">Dodaj</button>
-        </form>
-    </div>
+    <h3>Komentarze</h3>
+    {% for comment in comments %}
+        <div>
+            <p>{{ comment.content }}</p>
+            <p>Autor: {{ comment.author }}</p>
+            <p>Data utworzenia: {{ comment.date_of_creation }}</p>
+            {% if comment.image %}
+                <img src="{{ comment.image.url }}" alt="Comment image">
+            {% endif %}
+
+            {% if request.user == comment.author %}
+                <a href="{% url 'edit_comment' comment_id=comment.id %}" class="btn btn-primary">Edytuj komentarz</a>
+                <a href="{% url 'delete_comment' comment_id=comment.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń komentarz</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <h4>Dodaj komentarz</h4>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Dodaj komentarz</button>
+    </form>
 </body>
 </html>

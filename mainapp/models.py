@@ -31,9 +31,14 @@ class Comment(models.Model):
     date_of_creation = models.DateTimeField(auto_now_add=True)
 
 
+# models.py
+
 class Tag(models.Model):
     name = models.CharField(max_length=255)
     posts = models.ManyToManyField(Post, through='PostTag')
+    def __str__(self):
+        return self.name
+
 
 class PostTag(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

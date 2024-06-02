@@ -12,5 +12,10 @@ urlpatterns = [
     path('blogs/<int:blog_id>/', views.blog_details, name='blog_details'),
     path('blogs/', views.blogs, name='blogs'),
     path('logout/', views.logout_view, name='logout'),
+    path('blogs/<int:blog_id>/edit/', views.BlogEditView, name='edit_blog'),
+    path('blogs/<int:blog_id>/delete/', views.BlogDeleteView, name='delete_blog'),
+    path('post/<int:post_id>/edit/', views.PostEditView, name='edit_post'),
+    path('post/<int:post_id>/delete/', views.PostDeleteView, name='delete_post'),
+    path('comment/<int:comment_id>/edit/', views.CommentEditView, name='edit_comment'),
+    path('comment/<int:comment_id>/delete/', views.CommentDeleteView, name='delete_comment'),
 ]
-

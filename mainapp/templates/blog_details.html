@@ -7,33 +7,54 @@
     <title>Szczegóły bloga</title>
 </head>
 <body>
-    <h2>Szczegóły bloga</h2>
-    <h3>{{ blog.title }}</h3>
-    <p>{{ blog.description }}</p>
-    <p>Właściciel: {{ blog.owner }}</p>
-    <p>Data utworzenia: {{ blog.date_of_creation }}</p>
+    <div class="container">
+        <h2>Szczegóły bloga</h2>
+        <h3>{{ blog.title }}</h3>
+        <p>{{ blog.description }}</p>
+        <p>Właściciel: {{ blog.owner }}</p>
+        <p>Data utworzenia: {{ blog.date_of_creation }}</p>
 
-    <div class="container_button">
-        <a class="button_1" href="{% url 'add_post' blog_id=blog.id %}" >Dodaj Post</a>
+        {% if request.user == blog.owner %}
+            <a href="{% url 'edit_blog' blog_id=blog.id %}" class="btn btn-primary">Edytuj blog</a>
+            <a href="{% url 'delete_blog' blog_id=blog.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten blog?')">Usuń blog</a>
+        {% endif %}
+
+        <div class="container_button">
+            <a href="{% url 'add_post' blog_id=blog.id %}" class="btn btn-success">Dodaj Post</a>
+        </div>
+
+        <h3>Filtruj posty według tagów:</h3>
+        <form method="get" action=".">
+            <select name="tag" onchange="this.form.submit()">
+                <option value="">Wszystkie tagi</option>
+                {% for tag in tags %}
+                    <option value="{{ tag.id }}" {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <h3>Posty:</h3>
+        <ul>
+            {% for post in posts %}
+                <li>
+                    <h4><a href="{% url 'post_details' post.id %}">{{ post.title }}</a></h4>
+                    <p>{{ post.content }}</p>
+                    <p>Autor: {{ post.author }}</p>
+                    <p>Data dodania: {{ post.date_of_creation }}</p>
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="Post Image" class="img-fluid">
+                    {% endif %}
+                    {% if request.user == post.author %}
+                        <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
+                        <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li>Brak postów.</li>
+            {% endfor %}
+        </ul>
+
+
     </div>
-
-
-    <h3>Posty:</h3>
-    <ul>
-        {% for post in posts %}
-            <li>
-                <h2><a href="{% url 'post_details' post.id %}">{{ post.title }}</a></h2>
-                <p>{{ post.content }}</p>
-                <p>Autor: {{ post.author }}</p>
-                <p>Data dodania: {{ post.date_of_creation }}</p>
-                {% if post.image %}
-                    <img src="{{ post.image.url }}" alt="Post Image">
-                {% endif %}
-            </li>
-        {% empty %}
-            <li>Brak postów.</li>
-        {% endfor %}
-    </ul>
-
 </body>
 </html>

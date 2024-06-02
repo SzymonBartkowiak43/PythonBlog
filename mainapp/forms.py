@@ -1,14 +1,14 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
-from .models import Blog, Post, Comment
+from .models import Blog, Post, Comment, Tag, PostTag
 
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(label="e-mail", required=True, error_messages={'unique': 'This email is already in use'})
     first_name = forms.CharField(label="name", max_length=30)
     last_name = forms.CharField(label="surname", max_length=30)
+
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")
@@ -20,38 +20,82 @@ class BlogCreationForm(forms.ModelForm):
         fields = ('title', 'description')
 
 
+class BlogEditForm(forms.ModelForm):
+    class Meta:
+        model = Blog
+        fields = ('title', 'description')
+
+
 class PostCreationForm(forms.ModelForm):
-    is_private = forms.BooleanField(label="Should this post be private", required=False)
-    password = forms.CharField(label="Password for post", max_length=128, required=False, widget=forms.PasswordInput)
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
+    )
+    new_tags = forms.CharField(
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Add new tags separated by commas'})
+    )
 
     class Meta:
         model = Post
-        fields = ['title', 'content', 'image']
-
-    def clean(self):
-        cleaned_data = super().clean()
-        is_private = cleaned_data.get('is_private')
-        password = cleaned_data.get('password')
-
-        if is_private and not password:
-            raise forms.ValidationError("If you want make this blog private pass the password")
-        return cleaned_data
+        fields = ['title', 'content', 'image', 'tags', 'new_tags', 'is_private', 'password']
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        is_private = self.cleaned_data.get('is_private')
-        password = self.cleaned_data.get('password')
+        if commit:
+            instance.save()
+            tags = self.cleaned_data['tags']
+            new_tags = self.cleaned_data['new_tags']
 
-        if is_private:
-            instance.is_private = True
-            instance.password = password
-        else:
-            instance.is_private = False
-            instance.password = None
+            for tag in tags:
+                PostTag.objects.create(post=instance, tag=tag)
+
+            if new_tags:
+                new_tag_names = [tag.strip() for tag in new_tags.split(',')]
+                for name in new_tag_names:
+                    tag, created = Tag.objects.get_or_create(name=name)
+                    PostTag.objects.create(post=instance, tag=tag)
+            self.save_m2m()
+        return instance
+
+
+class PostEditForm(forms.ModelForm):
+    tags = forms.ModelMultipleChoiceField(
+        queryset=Tag.objects.all(),
+        required=False,
+        widget=forms.SelectMultiple(attrs={'class': 'form-control'})
+    )
+    new_tags = forms.CharField(
+        max_length=255,
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': 'Add new tags separated by commas'})
+    )
+
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'image', 'tags', 'new_tags', 'is_private', 'password']
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        tags = self.cleaned_data['tags']
+        new_tags = self.cleaned_data['new_tags']
 
         if commit:
             instance.save()
+            PostTag.objects.filter(post=instance).delete()
+            for tag in tags:
+                PostTag.objects.create(post=instance, tag=tag)
+
+            if new_tags:
+                new_tag_names = [tag.strip() for tag in new_tags.split(',')]
+                for name in new_tag_names:
+                    tag, created = Tag.objects.get_or_create(name=name)
+                    PostTag.objects.create(post=instance, tag=tag)
+            self.save_m2m()
         return instance
+
 
 class CommentCreationForm(forms.ModelForm):
     class Meta:
@@ -62,3 +106,7 @@ class CommentCreationForm(forms.ModelForm):
         }
 
 
+class CommentEditForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content', 'image']
