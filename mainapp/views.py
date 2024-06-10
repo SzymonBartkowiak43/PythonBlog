@@ -100,6 +100,9 @@ def logout_view(request):
 @login_required
 def add_post(request, blog_id):
     blog = get_object_or_404(Blog, pk=blog_id)
+    if request.user != blog.owner:
+        return redirect('homepage')
+
     if request.method == 'POST':
         form = PostCreationForm(request.POST, request.FILES)
         if form.is_valid():
@@ -155,18 +158,26 @@ def post_details(request, post_id):
     comments = post.comments.order_by('date_of_creation')
     form = CommentCreationForm()
 
+    # Handle private post logic
     if post.is_private:
         if not request.user.is_authenticated:
-            return redirect('blog_password')
-        else:
-            if post.author != request.user:
-                return redirect('blog_password')
+            return redirect('login')
 
-        password = request.POST.get('password')
-        if password != post.password:
-            return render(request, 'post_password.html', {'post_id': post_id})
+        password_verified = request.session.get(f'post_{post_id}_password_verified', False)
 
-    if request.method == 'POST':
+        if not password_verified:
+            if request.method == 'POST' and 'password' in request.POST:
+                password = request.POST.get('password')
+                if password == post.password:
+                    request.session[f'post_{post_id}_password_verified'] = True
+                    return redirect('post_details', post_id=post_id)
+                else:
+                    return render(request, 'post_password.html', {'post_id': post_id, 'error': 'Incorrect password'})
+            else:
+                return render(request, 'post_password.html', {'post_id': post_id})
+
+    # Handle comment form submission
+    if request.method == 'POST' and not 'password' in request.POST:
         form = CommentCreationForm(request.POST)
         if form.is_valid():
             comment = form.save(commit=False)
@@ -178,6 +189,7 @@ def post_details(request, post_id):
     return render(request, 'post_details.html', {
         'post': post, 'comments': comments, 'form': form
     })
+
 
 
 @login_required
