@@ -1,51 +1,93 @@
-.test {
-    color: red;
+nav {
+    background-color: #007bff;
+    border-radius: 0 0 15px 15px;
+    border-bottom: 2px solid #FFFFFF;
 }
 
-#bg{
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: top;
-    background-color: #000;
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-.button_1{
+nav li {
+    display: inline-block;
+    margin: 0 10px;
+}
+
+nav a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.button_1,
+.button_2 {
     border-radius: 35px;
-    background-color: #f4511e;
+    background-color: rgba(48, 48, 48, 0.7);
     color: #FFFFFF;
     text-align: center;
-    font-size: 22px;
+    font-size: 20px;
     padding: 15px 30px;
     cursor: pointer;
     position: relative;
-    transition: all 0.5s;
+    animation: fadeIn 2s ease-in-out;
     text-transform: uppercase;
-    margin-top: 220px;
+    margin-top: 380px;
+    margin-right: 20px;
+    border: 2px solid #FFFFFF;
+    transition: background-color 0.5s ease;
+}
 
-}
-.button_1:hover{
-    background-color: rgb(189, 0, 0);
-}
 .button_2{
-    border-radius: 35px;
-    background-color: #f4511e;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 22px;
-    padding: 15px 30px;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.5s;
-    text-transform: uppercase;
-    margin-top: 220px;
-    margin-left: 50px;
-
+    margin-left: 60px;
+    margin-right: -80px;
 }
-.button_2:hover{
-    background-color: rgb(189, 0, 0);
+
+.button_1:hover,
+.button_2:hover {
+    color: deeppink;
+    background-color: #252525;
+    opacity: 1;
+    text-decoration: none;
+
 }
 .container_button {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.background-image {
+    position: relative;
+    z-index: 50;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('mainapp/static/img/plik.gif');
+    /* Pozostałe style dla elementu */
+    opacity: 0.9; /* Ustaw pożądaną przezroczystość (0 - 1) */
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    background: #1e1e1e;
+    border-top: 2px solid #FFFFFF;
+    border-radius: 15px 15px 0 0;
+    text-align: center;
+}
+
+
+
+
+

@@ -12,7 +12,9 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'homepage' %}">SuperMegaKozackiBlog.com</a>
+                <a class="navbar-brand" href="{% url 'homepage' %}">
+                    <img src="/img/logo.jpg">
+                </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,8 +39,6 @@
                 </div>
             </div>
         </nav>
-        <h1 style="text-align: center;">Witamy na naszej stronie</h1>
-        <p style="text-align: center;">Na tej stronie będzie cały blog</p>
         <div class="container_button">
             <a class="button_1" href="{% url 'utworz_blog' %}" >Stwórz swój blog</a>
             <a class="button_2" href="{% url 'blogs' %}" >Zobacz wszystkie blogi</a>
@@ -48,6 +48,9 @@
         {% block content %}
         {% endblock %}
     </main>
+<footer class="footer" >
+    <p>Copyright © 2024 Cezary Babik, Szymon Bartkowiak, Bartosz Godlewski</p>
+</footer>
 </body>
 </html>
 
