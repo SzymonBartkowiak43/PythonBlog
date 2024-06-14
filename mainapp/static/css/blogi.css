@@ -1,0 +1,28 @@
+/* base.css */
+/* Dodaj do swojego pliku base.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #606060;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+ul {
+    list-style: none;
+    padding: 20px ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+li {
+    margin-bottom: 20px;
+    border: 1px solid #873333;
+    padding: 20px;
+    background-color: #706e6e;
+    width: 300px; /* Dostosuj szerokość kwadratu */
+    text-align: center;
+}
