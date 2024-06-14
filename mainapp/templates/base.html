@@ -5,52 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>{% block title %}Mój Blog{% endblock %}</title>
 </head>
-<body id='bg' style="background-image: url('{% static 'img/plik.gif' %}')">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{% url 'homepage' %}">
-                    <img src="/img/logo.jpg">
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
-                    <ul class="navbar-nav ml-auto">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item text-white">
-                                <a class="nav-link text-white font-weight-bold" href="{% url 'logout' %}">Wyloguj</a>
-                            </li>
-                            <li class="nav-item text-white">
-                                <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
-                            </li>
-                        {% else %}
-                            <li class="nav-item text-white">
-                                <a class="nav-link text-white font-weight-bold" href="{% url 'login' %}">Logowanie</a>
-                            </li>
-                            <li class="nav-item text-white">
-                                <a class="nav-link text-white font-weight-bold" href="{% url 'register' %}">Rejestracja</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
+<body>
+
+<div id="bg">
+    <video class="video-background" autoplay loop muted>
+        <source src="{% static 'video/video_background.mp4' %}" type="video/mp4">
+        Twoja przeglądarka nie obsługuje znacznika wideo.
+    </video>
+</div>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">
+                <img src="/img/logo.jpg">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item text-white">
+                            <a class="nav-link text-white font-weight-bold" href="{% url 'logout' %}">Wyloguj</a>
+                        </li>
+                        <li class="nav-item text-white">
+                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                        </li>
+                    {% else %}
+                        <li class="nav-item text-white">
+                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                        </li>
+                        <li class="nav-item text-white">
+                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
-        </nav>
-        <div class="container_button">
-            <a class="button_1" href="{% url 'utworz_blog' %}" >Stwórz swój blog</a>
-            <a class="button_2" href="{% url 'blogs' %}" >Zobacz wszystkie blogi</a>
         </div>
-    </header>
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-<footer class="footer" >
+    </nav>
+    <div class="container_button">
+        <a class="button_1" href="{% url 'utworz_blog' %}" >Stwórz swój blog</a>
+        <a class="button_2" href="{% url 'blogs' %}" >Zobacz wszystkie blogi</a>
+    </div>
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+<footer class="footer">
     <p>Copyright © 2024 Cezary Babik, Szymon Bartkowiak, Bartosz Godlewski</p>
 </footer>
+
 </body>
 </html>
-
