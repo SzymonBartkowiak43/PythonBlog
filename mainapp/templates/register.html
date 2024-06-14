@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/registrer.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <title>Create your account</title>
 </head>
 <body>
-    <h1>Create your account</h1>
-    <form class="form-with-validation" action="/register/" method="post">
-        {% csrf_token %}
+    <div class="background-image">
+        <div class="form-container">
+            <form class="form-with-validation" action="/register/" method="post">
+                {% csrf_token %}
+                <h1>Create your account</h1>
 
-        {{ form.as_p }}
-        <button class="form-submit" type="submit">Confirm</button>
-    </form>
+                {{ form.as_p }}
+
+                <button class="btn btn-primary form-submit" type="submit">Confirm</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

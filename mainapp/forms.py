@@ -5,13 +5,26 @@ from .models import Blog, Post, Comment, Tag, PostTag
 
 
 class CustomUserCreationForm(UserCreationForm):
-    email = forms.EmailField(label="e-mail", required=True, error_messages={'unique': 'This email is already in use'})
-    first_name = forms.CharField(label="name", max_length=30)
-    last_name = forms.CharField(label="surname", max_length=30)
+    email = forms.EmailField(label="e-mail", widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(label="name", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(label="surname", max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+
+        self.fields['username'].widget.attrs['class'] = 'form-control'
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email is already in use.")
+        return email
 
 
 class BlogCreationForm(forms.ModelForm):
