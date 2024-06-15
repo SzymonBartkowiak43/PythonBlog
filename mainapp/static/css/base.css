@@ -93,6 +93,7 @@ nav a {
     margin-right: 20px;
     border: 1px solid #FFFFFF;
     transition: background-color 0.5s ease;
+    transition: margin 0.5s ease;
     z-index: 2;
 }
 
