@@ -1,0 +1,88 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+nav {
+    background-color: #a3153b;
+    border-radius: 0 0 5px 5px;
+    border-bottom: 2px solid #FFFFFF;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+        /
+nav li {
+    display: inline-block;
+    margin: 0 10px;
+    border: 1px solid #FFFFFF;
+    border-radius: 8px;
+}
+
+nav li:hover {
+    border: 1px solid #25811c;
+}
+
+
+nav a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none; /* Usunięcie podkreślenia z linków */
+    transition: color 0.3s ease; /* Animacja koloru */
+}
+
+        /* Stylizacja ciała strony */
+body {
+    background-color: #f5f5f5; /* Delikatne tło */
+    color: #333;
+    text-align: center;
+}
+
+
+h2 {
+    margin-bottom: 40px;
+    color: #2c3e50; /* Ciemny kolor nagłówka */
+    font-size: 2.5rem;
+}
+
+
+form {
+    background-color: #fff;
+    color: #252525;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto; /* Wycentrowanie formularza */
+}
+
+        /* Stylizacja przycisku */
+button {
+    padding: 10px 20px;
+    background-color: #a3153b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #8e0f35;
+}

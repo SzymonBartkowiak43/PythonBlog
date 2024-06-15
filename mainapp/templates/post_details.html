@@ -1,48 +1,51 @@
-<!-- post_details.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/post_details.css' %}">
     <title>Szczegóły posta</title>
 </head>
 <body>
-    <h2>{{ post.title }}</h2>
-    <p>{{ post.content }}</p>
-    <p>Autor: {{ post.author }}</p>
-    <p>Data utworzenia: {{ post.date_of_creation }}</p>
-    {% if post.image %}
-        <img src="{{ post.image.url }}" alt="Post image">
-    {% endif %}
+    <div class="container">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <p>Autor: {{ post.author }}</p>
+        <p>Data utworzenia: {{ post.date_of_creation }}</p>
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="Post image">
+        {% endif %}
 
-    {% if request.user == post.author %}
-        <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
-        <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
-    {% endif %}
+        {% if request.user == post.author %}
+            <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
+            <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
+        {% endif %}
 
-    <h3>Komentarze</h3>
-    {% for comment in comments %}
-        <div>
-            <p>{{ comment.content }}</p>
-            <p>Autor: {{ comment.author }}</p>
-            <p>Data utworzenia: {{ comment.date_of_creation }}</p>
-            {% if comment.image %}
-                <img src="{{ comment.image.url }}" alt="Comment image">
-            {% endif %}
+        <h3>Komentarze</h3>
+        {% for comment in comments %}
+            <div class="comment">
+                <p>{{ comment.content }}</p>
+                <p>Autor: {{ comment.author }}</p>
+                <p>Data utworzenia: {{ comment.date_of_creation }}</p>
+                {% if comment.image %}
+                    <img src="{{ comment.image.url }}" alt="Comment image">
+                {% endif %}
 
-            {% if request.user == comment.author %}
-                <a href="{% url 'edit_comment' comment_id=comment.id %}" class="btn btn-primary">Edytuj komentarz</a>
-                <a href="{% url 'delete_comment' comment_id=comment.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń komentarz</a>
-            {% endif %}
-        </div>
-    {% endfor %}
+                {% if request.user == comment.author %}
+                    <a href="{% url 'edit_comment' comment_id=comment.id %}" class="btn btn-primary">Edytuj komentarz</a>
+                    <a href="{% url 'delete_comment' comment_id=comment.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń komentarz</a>
+                {% endif %}
+            </div>
+        {% endfor %}
 
-    <h4>Dodaj komentarz</h4>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Dodaj komentarz</button>
-    </form>
+        <h4>Dodaj komentarz</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Dodaj komentarz</button>
+        </form>
+    </div>
 </body>
 </html>

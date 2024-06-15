@@ -1,0 +1,196 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Stylizacja paska menu */
+nav {
+    background-color: #a3153b;
+    border-radius: 0 0 5px 5px;
+    border-bottom: 2px solid #FFFFFF;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0 10px;
+    border: 1px solid #FFFFFF;
+    border-radius: 8px;
+}
+
+nav li:hover {
+    border: 1px solid #25811c;
+}
+
+nav a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+}
+
+/* Stylizacja ciała strony */
+body {
+    background-color: #f5f5f5; /* Delikatne tło */
+    color: #333; /* Kolor tekstu */
+
+}
+
+/* Kontener główny */
+.container {
+    max-width: 800px;
+    margin: 0 auto; /* Wycentrowanie kontenera */
+    padding: 20px;
+    background-color: #fff; /* Białe tło */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+}
+
+/* Stylizacja nagłówków */
+.container h2,
+.container h3 {
+    color: #2c3e50; /* Ciemny kolor nagłówków */
+    margin-bottom: 20px;
+}
+
+.container h2 {
+    text-align: center;
+    font-size: 2rem;
+}
+
+.container h3 {
+    font-size: 1.5rem;
+}
+
+/* Stylizacja paragrafów */
+.container p {
+    color: #7f8c8d; /* Szary kolor tekstu */
+    line-height: 1.6; /* Zwiększona wysokość linii dla lepszej czytelności */
+    margin-bottom: 20px;
+}
+
+/* Stylizacja przycisków */
+.btn {
+    margin-right: 10px; /* Odstęp między przyciskami */
+}
+
+.btn-primary {
+    background-color: #2980b9; /* Niebieski kolor przycisku */
+    border-color: #2980b9;
+    transition: background-color 0.3s ease; /* Animacja koloru */
+}
+
+.btn-primary:hover {
+    background-color: #3498db; /* Jaśniejszy kolor przy najechaniu */
+}
+
+.btn-danger {
+    background-color: #c0392b; /* Czerwony kolor przycisku */
+    border-color: #c0392b;
+    transition: background-color 0.3s ease; /* Animacja koloru */
+}
+
+.btn-danger:hover {
+    background-color: #e74c3c; /* Jaśniejszy kolor przy najechaniu */
+}
+
+.btn-success {
+    background-color: #27ae60; /* Zielony kolor przycisku */
+    border-color: #27ae60;
+    transition: background-color 0.3s ease; /* Animacja koloru */
+}
+
+.btn-success:hover {
+    background-color: #2ecc71; /* Jaśniejszy kolor przy najechaniu */
+}
+
+/* Stylizacja kontenera przycisku dodawania posta */
+.container_button {
+    text-align: center; /* Wycentrowanie przycisku */
+    margin: 20px 0;
+}
+
+/* Stylizacja formularza */
+form {
+    margin-bottom: 20px;
+}
+
+/* Stylizacja listy postów */
+ul {
+    list-style-type: none; /* Usunięcie domyślnych punktów listy */
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff; /* Białe tło dla wpisów */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animacja przejścia */
+}
+
+ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Mocniejszy cień przy najechaniu */
+}
+
+/* Stylizacja nagłówka postu */
+ul li h4 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+    color: #2980b9; /* Kolor linków */
+}
+
+/* Stylizacja linku w nagłówku postu */
+ul li h4 a {
+    text-decoration: none;
+    color: inherit; /* Dziedziczenie koloru z nagłówka */
+    transition: color 0.3s ease; /* Animacja koloru */
+}
+
+ul li h4 a:hover {
+    color: #3498db; /* Jaśniejszy kolor przy najechaniu */
+}
+
+/* Stylizacja opisu postu */
+ul li p {
+    color: #7f8c8d; /* Szary kolor tekstu opisu */
+    line-height: 1.6; /* Zwiększona wysokość linii dla lepszej czytelności */
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+/* Stylizacja obrazu postu */
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Stylizacja formularza wyboru tagów */
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+select:hover, select:focus {
+    border-color: #2980b9;
+}
