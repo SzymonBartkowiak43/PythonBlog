@@ -42,18 +42,20 @@
 </header>
 
 <main>
-    <div class="blogs_container">
-    <h1>Lista Blogów</h1>
-    <ul>
-        {% for blog in blogs %}
-            <li>
-                <h2><a href="{% url 'blog_details' blog.id %}">{{ blog.title }}</a></h2>
-                <p>{{ blog.description }}</p>
-            </li>
-        {% empty %}
-            <li>Brak dostępnych blogów.</li>
-        {% endfor %}
-    </ul>
+    <div class="background-image">
+        <div class="blogs_container">
+            <h1>Lista Blogów</h1>
+            <ul>
+                {% for blog in blogs %}
+                    <li>
+                        <h2><a href="{% url 'blog_details' blog.id %}">{{ blog.title }}</a></h2>
+                        <p>{{ blog.description }}</p>
+                    </li>
+                {% empty %}
+                    <li>Brak dostępnych blogów.</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </main>
 </body>
