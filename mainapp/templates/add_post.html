@@ -41,12 +41,14 @@
     </nav>
 </header>
 <main>
-    <h2>Dodaj nowy post</h2>
+    <div class="background-image">
     <form method="post" enctype="multipart/form-data">
+        <h2>Dodaj nowy post</h2>
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Add Post</button>
     </form>
+    </div>
 </main>
 </body>
 </html>

@@ -5,16 +5,35 @@
     font-family: 'Poppins', sans-serif;
 }
 
+header {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+.background-image {
+    background-image: url('/static/img/background_sites_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Stylizacja paska menu */
 nav {
     background-color: #a3153b;
     border-radius: 0 0 5px 5px;
     border-bottom: 2px solid #FFFFFF;
-    position: fixed; /* Przykleja nagłówek do góry */
-    top: 0; /* Pozycjonuje nagłówek na górze strony */
-    width: 100%; /* Ustawia szerokość nagłówka na 100% */
-    z-index: 1000; /* Ustawia z-index, aby nagłówek był na wierzchu innych elementów */
-    padding: 10px 0; /* Dodaje padding dla nawigacji */
+    position: fixed; 
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 0;
 }
 
 /* Stylizacja listy w pasku menu */
@@ -57,7 +76,7 @@ body {
 main h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #292929; /* Ciemny kolor nagłówka */
     font-size: 2.5rem;
 }
 
@@ -79,12 +98,14 @@ main h1 {
 
 /* Stylizacja pojedynczego wpisu na liście */
 .blogs-container ul li {
-    background-color: #fff; /* Białe tło dla wpisów */
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
     padding: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animacja przejścia */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #ced4da;
 }
 
 .blogs-container ul li:hover {
@@ -119,7 +140,9 @@ main h1 {
 
 /* Stylizacja formularza edycji bloga */
 .edit-blog-container {
-    background-color: #fff; /* Białe tło dla kontenera formularza */
+    border: 1px solid #ced4da;
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
     padding: 20px;
@@ -130,7 +153,7 @@ main h1 {
 .edit-blog-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #292929;
     font-size: 2rem;
 }
 
