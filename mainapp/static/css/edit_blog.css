@@ -29,7 +29,7 @@ nav {
     background-color: #a3153b;
     border-radius: 0 0 5px 5px;
     border-bottom: 2px solid #FFFFFF;
-    position: fixed; 
+    position: fixed;
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -166,4 +166,20 @@ main h1 {
     align-self: center;
     padding: 10px 20px;
     margin-top: 20px;
+}
+
+textarea {
+    border: 1px solid #000000;
+    border-radius: 5px; /* Zaokrąglenie boków */
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #2980b9;
+    outline: none;
 }
