@@ -106,3 +106,20 @@ button {
 button:hover {
     background-color: #8e0f35;
 }
+input[type="text"],
+textarea {
+    border: 1px solid #ced4da;
+    border-radius: 5px; /* Zaokrąglenie boków */
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #2980b9;
+    outline: none;
+}
+
