@@ -5,6 +5,12 @@
     font-family: 'Poppins', sans-serif;
 }
 
+header {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
 /* Stylizacja paska menu */
 nav {
     background-color: #a3153b;
@@ -42,24 +48,39 @@ nav a {
 /* Stylizacja ciała strony */
 body {
     background-color: #f5f5f5; /* Delikatne tło */
-    color: #333; /* Kolor tekstu */
+    color: #d1d1d1; /* Kolor tekstu */
 
+}
+
+.background-image {
+    background-image: url('/static/img/background_sites_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 /* Kontener główny */
 .container {
     max-width: 800px;
-    margin: 0 auto; /* Wycentrowanie kontenera */
+    margin: 0 auto;
     padding: 20px;
-    background-color: #fff; /* Białe tło */
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    border: 1px solid #ced4da;
 }
 
 /* Stylizacja nagłówków */
 .container h2,
 .container h3 {
-    color: #2c3e50; /* Ciemny kolor nagłówków */
+    color: #292929;
     margin-bottom: 20px;
 }
 
@@ -74,7 +95,7 @@ body {
 
 /* Stylizacja paragrafów */
 .container p {
-    color: #7f8c8d; /* Szary kolor tekstu */
+    color: #d1d1d1; /* Szary kolor tekstu */
     line-height: 1.6; /* Zwiększona wysokość linii dla lepszej czytelności */
     margin-bottom: 20px;
 }
@@ -105,8 +126,8 @@ body {
 }
 
 .btn-success {
-    background-color: #27ae60; /* Zielony kolor przycisku */
-    border-color: #27ae60;
+    background-color: #1a8f1f; /* Zielony kolor przycisku */
+    border-color: #000000;
     transition: background-color 0.3s ease; /* Animacja koloru */
 }
 
@@ -132,7 +153,7 @@ ul {
 }
 
 ul li {
-    background-color: #fff; /* Białe tło dla wpisów */
+    background-color: #333232;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
     margin-bottom: 20px;

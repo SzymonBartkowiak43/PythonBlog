@@ -1,31 +1,47 @@
 * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
+header {
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+
+.background-image {
+    background-image: url('/static/img/background_sites_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
 nav {
     background-color: #a3153b;
     border-radius: 0 0 5px 5px;
     border-bottom: 2px solid #FFFFFF;
-    position: fixed; /* Przykleja nagłówek do góry */
-    top: 0; /* Pozycjonuje nagłówek na górze strony */
-    width: 100%; /* Ustawia szerokość nagłówka na 100% */
-    z-index: 1000; /* Ustawia z-index, aby nagłówek był na wierzchu innych elementów */
-    padding: 10px 0; /* Dodaje padding dla nawigacji */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 10px 0;
 }
 
-        /* Stylizacja listy w pasku menu */
 nav ul {
-    list-style-type: none; /* Usunięcie domyślnych punktów listy */
+    list-style-type: none;
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center; /* Wycentrowanie elementów w nawigacji */
+    justify-content: center;
 }
-
 
 nav li {
     display: inline-block;
@@ -38,60 +54,56 @@ nav li:hover {
     border: 1px solid #25811c;
 }
 
-
 nav a {
     display: block;
     padding: 10px 20px;
     color: #fff;
-    text-decoration: none; /* Usunięcie podkreślenia z linków */
-    transition: color 0.3s ease; /* Animacja koloru */
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
-
 
 body {
-    background-color: #f5f5f5; /* Delikatne tło */
-    color: #333; /* Kolor tekstu */
+    background-color: #f5f5f5;
+    color: #333;
 }
-
 
 main h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #292929;
     font-size: 2.5rem;
 }
 
-        /* Stylizacja kontenera formularza */
 .container {
-    background-color: #fff; /* Białe tło */
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
     color: #252525;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     max-width: 600px;
-    margin: 40px auto; /* Wycentrowanie formularza */
+    margin: 40px auto;
+    border: 1px solid #ced4da;
 }
 
-        /* Stylizacja nagłówka formularza */
 .container h1 {
     text-align: center;
     margin-bottom: 20px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #2c3e50;
     font-size: 2rem;
 }
 
-        /* Stylizacja formularza */
 form {
     display: flex;
     flex-direction: column;
+    border-radius: 8px;
 }
 
-        /* Stylizacja przycisku */
 input[type="submit"] {
     align-self: center;
     padding: 10px 20px;
     margin-top: 20px;
-    background-color: #a3153b;
+    background-color: #4b8f1f;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -100,5 +112,5 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #8e0f35;
+    background-color: #000000;
 }
