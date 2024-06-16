@@ -178,7 +178,7 @@ def post_details(request, post_id):
 
     # Handle comment form submission
     if request.method == 'POST' and not 'password' in request.POST:
-        form = CommentCreationForm(request.POST)
+        form = CommentCreationForm(request.POST, request.FILES)
         if form.is_valid():
             comment = form.save(commit=False)
             comment.author = request.user
@@ -189,6 +189,7 @@ def post_details(request, post_id):
     return render(request, 'post_details.html', {
         'post': post, 'comments': comments, 'form': form
     })
+
 
 
 

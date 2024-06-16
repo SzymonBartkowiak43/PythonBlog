@@ -1,0 +1,5 @@
+.image-size {
+    width: 500px;
+    height: 500px;
+    object-fit: cover; /* This ensures the image maintains its aspect ratio while fitting within the specified size */
+}
