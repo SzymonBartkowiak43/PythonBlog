@@ -9,6 +9,39 @@
     <title>Szczegóły posta</title>
 </head>
 <body>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'homepage' %}">
+                <img src="/img/logo.jpg" alt="Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li class="nav-item text-white">
+                            <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj</a>
+                        </li>
+                        <li class="nav-item text-white">
+                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                        </li>
+                    {% else %}
+                        <li class="nav-item text-white">
+                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                        </li>
+                        <li class="nav-item text-white">
+                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="background-image">
     <div class="container">
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
@@ -47,5 +80,7 @@
             <button type="submit" class="btn btn-success">Dodaj komentarz</button>
         </form>
     </div>
+    </div>
+</main>
 </body>
 </html>
