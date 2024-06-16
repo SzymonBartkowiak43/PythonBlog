@@ -1,9 +1,14 @@
-/* Resetowanie marginesów i paddingów dla wszystkich elementów */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif; /* Użycie ładnej czcionki */
+    font-family: 'Poppins', sans-serif;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 99;
 }
 
 /* Stylizacja paska menu */
@@ -54,11 +59,24 @@ body {
     color: #333; /* Kolor tekstu */
 }
 
+.background-image {
+    background-image: url('/static/img/background_sites_3.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Stylizacja nagłówka głównego */
 main h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #252525;
     font-size: 2.5rem;
 }
 
@@ -74,7 +92,7 @@ main h1 {
 
 /* Stylizacja listy blogów */
 .blogs-container ul {
-    list-style-type: none; /* Usunięcie domyślnych punktów listy */
+    list-style-type: none;
     padding: 0;
 }
 
@@ -120,7 +138,9 @@ main h1 {
 
 /* Stylizacja formularza edycji bloga */
 .edit-blog-container, .edit-post-container {
-    background-color: #fff; /* Białe tło dla kontenera formularza */
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(3px);
+    border: 1px solid #ced4da;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
     padding: 20px;
@@ -131,7 +151,7 @@ main h1 {
 .edit-blog-container h2, .edit-post-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #2c3e50; /* Ciemny kolor nagłówka */
+    color: #252525; /* Ciemny kolor nagłówka */
     font-size: 2rem;
 }
 
@@ -148,7 +168,22 @@ main h1 {
 
 /* Stylizacja labeli w formularzu */
 .edit-blog-container label, .edit-post-container label {
-    color: #2c3e50; /* Kolor labeli */
-    font-weight: bold; /* Pogrubienie tekstu */
-    margin-bottom: 10px; /* Odstęp na dole labeli */
+    color: #252525;
+    margin-bottom: 10px;
+}
+input[type="text"],
+textarea {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #2980b9;
+    outline: none;
 }
