@@ -130,3 +130,13 @@ nav a {
     text-align: center;
     z-index: 2;
 }
+
+.custom-logo {
+    width: 60px;
+    height: auto;
+    margin: -10px; /* Margines wokół obrazka (możesz dostosować w zależności od potrzeb) */
+    display: block; /* Ustawienie jako element blokowy */
+    margin-left: auto; /* Wycentrowanie obrazka w poziomie */
+    margin-right: auto; /* Wycentrowanie obrazka w poziomie */
+}
+
