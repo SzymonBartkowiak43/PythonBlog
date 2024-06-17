@@ -28,10 +28,10 @@ nav {
     background-color: #a3153b;
     border-radius: 0 0 5px 5px;
     border-bottom: 2px solid #FFFFFF;
-    position: fixed; /* Przykleja nagłówek do góry */
-    top: 0; /* Pozycjonuje nagłówek na górze strony */
-    width: 100%; /* Ustawia szerokość nagłówka na 100% */
-    z-index: 1000; /* Ustawia z-index, aby nagłówek był na wierzchu innych elementów */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
 }
 
 nav ul {
@@ -82,7 +82,7 @@ nav a {
 /* Form */
 .form-container {
     position: relative;
-    z-index: 2; /* Umieszczenie kontenera formularza nad pseudo-elementem */
+    z-index: 2;
     max-width: 400px;
     width: 100%;
     padding: 20px;

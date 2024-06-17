@@ -73,18 +73,10 @@ nav a {
     transition: color 0.3s ease;
 }
 
-        /* Stylizacja ciała strony */
-body {
-    background-color: #b50606; /* Delikatne tło */
-    color: #333;
-    text-align: center;
-}
-
-
 h2 {
     text-align: center;
     margin-bottom: 50px;
-    color: #292929; /* Ciemny kolor nagłówka */
+    color: #e4e4e4;
     font-size: 2.5rem;
 }
 
@@ -93,27 +85,12 @@ form {
     background-color: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(3px);
     border: 1px solid #ced4da;
-    color: #252525;
+    color: #e6e6e6;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 50px;
-    max-width: 800px;
-    margin: 0 auto; /* Wycentrowanie formularza */
-}
-
-        /* Stylizacja przycisku */
-button {
-    padding: 10px 20px;
-    background-color: #a3153b;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button:hover {
-    background-color: #8e0f35;
+    min-width: 600px;
+    margin: 0 auto;
 }
 
 input[type="text"],
@@ -131,5 +108,22 @@ input[type="text"]:focus,
 textarea:focus {
     border-color: #2980b9;
     outline: none;
+}
+
+.btn-primary {
+    align-self: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #0780e3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+}
+
+.btn-primary:hover {
+    background-color: #01508e;
 }
 
