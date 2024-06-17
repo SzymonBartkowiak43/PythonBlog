@@ -69,31 +69,15 @@ nav a {
 /* Stylizacja ciała strony */
 body {
     background-color: #f5f5f5; /* Delikatne tło */
-    color: #333; /* Kolor tekstu */
+    color: #e8e8e8; /* Kolor tekstu */
 }
 
 /* Stylizacja nagłówka głównego */
 main h1 {
     text-align: center;
     margin-bottom: 40px;
-    color: #292929; /* Ciemny kolor nagłówka */
+    color: #e4e4e4; /* Ciemny kolor nagłówka */
     font-size: 2.5rem;
-}
-
-/* Stylizacja kontenera blogów */
-.blogs-container {
-    background-color: yellow; /* Żółte tło */
-    border-radius: 8px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Delikatny cień */
-    max-width: 800px;
-    margin: 0 auto; /* Wycentrowanie kontenera */
-}
-
-/* Stylizacja listy blogów */
-.blogs-container ul {
-    list-style-type: none; /* Usunięcie domyślnych punktów listy */
-    padding: 0;
 }
 
 /* Stylizacja pojedynczego wpisu na liście */
@@ -153,7 +137,7 @@ main h1 {
 .edit-blog-container h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #292929;
+    color: #dddddd;
     font-size: 2rem;
 }
 
@@ -182,4 +166,22 @@ input[type="text"]:focus,
 textarea:focus {
     border-color: #2980b9;
     outline: none;
+}
+
+
+.btn-primary {
+    align-self: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #0780e3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+}
+
+.btn-primary:hover {
+    background-color: #01508e;
 }
