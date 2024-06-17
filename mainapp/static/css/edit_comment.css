@@ -80,7 +80,7 @@ nav a {
 /* Styl dla nagłówka */
 h2 {
     text-align: center;
-    color: #252525;
+    color: #dfdfdf;
     margin-bottom: 20px;
 }
 
@@ -142,3 +142,20 @@ textarea:focus {
     border-color: #2980b9;
     outline: none;
 }
+.btn-primary {
+    align-self: center;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #0780e3;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 50%;
+}
+
+.btn-primary:hover {
+    background-color: #01508e;
+}
+
