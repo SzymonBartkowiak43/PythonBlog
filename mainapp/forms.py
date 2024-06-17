@@ -1,7 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Blog, Post, Comment, Tag, PostTag
+
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -115,7 +116,7 @@ class CommentCreationForm(forms.ModelForm):
         model = Comment
         fields = ['content', 'image']
         widgets = {
-            'content': forms.TextInput(attrs={'placeholder': 'Dodaj komentarz'})
+            'content': forms.TextInput(attrs={'placeholder': 'Add comment'})
         }
 
 
@@ -123,3 +124,21 @@ class CommentEditForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['content', 'image']
+
+class UserEditForm(forms.ModelForm):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    first_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    last_name = forms.CharField(max_length=30, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name']
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = User
+        fields = ['old_password', 'new_password1', 'new_password2']

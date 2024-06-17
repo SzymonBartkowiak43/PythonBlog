@@ -23,17 +23,17 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj</a>
+                            <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item text-white">
-                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                            <a class="nav-link text-white" href="{% url 'edit_profile' %}">Hello, {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item text-white">
-                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                            <a class="nav-link login-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                            <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -46,8 +46,8 @@
     <div class="container">
         <h2>{{ post.title }}</h2>
         <p>{{ post.content }}</p>
-        <p>Autor: {{ post.author }}</p>
-        <p>Data utworzenia: {{ post.date_of_creation }}</p>
+        <p>Author: {{ post.author }}</p>
+        <p>Date of creation: {{ post.date_of_creation }}</p>
         {% if post.image %}
             <td>
                 <img src="{{ post.image.url }}" alt="">
@@ -55,16 +55,16 @@
         {% endif %}
 
         {% if request.user == post.author %}
-            <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
-            <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
+            <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edit post</a>
+            <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?')">Delete post</a>
         {% endif %}
 
-        <h3>Komentarze</h3>
+        <h3>Comments</h3>
         {% for comment in comments %}
             <div class="comment">
                 <p>{{ comment.content }}</p>
-                <p>Autor: {{ comment.author }}</p>
-                <p>Data utworzenia: {{ comment.date_of_creation }}</p>
+                <p>Owner: {{ comment.author }}</p>
+                <p>Date of creation: {{ comment.date_of_creation }}</p>
                 {% if comment.image %}
                     <td>
                         <img src="{{ comment.image.url }}" alt="">
@@ -72,17 +72,17 @@
                 {% endif %}
 
                 {% if request.user == comment.author %}
-                    <a href="{% url 'edit_comment' comment_id=comment.id %}" class="btn btn-primary">Edytuj komentarz</a>
-                    <a href="{% url 'delete_comment' comment_id=comment.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten komentarz?')">Usuń komentarz</a>
+                    <a href="{% url 'edit_comment' comment_id=comment.id %}" class="btn btn-primary">Edit comment</a>
+                    <a href="{% url 'delete_comment' comment_id=comment.id %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this comment?')">Delete comment</a>
                 {% endif %}
             </div>
         {% endfor %}
 
-        <h4>Dodaj komentarz</h4>
+        <h4>Add comment:</h4>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit" class="btn btn-success">Dodaj komentarz</button>
+            <button type="submit" class="btn btn-success">Add comment</button>
         </form>
     </div>
     </div>

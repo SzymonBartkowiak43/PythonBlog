@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{% static 'css/blog_details.css' %}">
     <link rel="stylesheet" href="{% static 'css/custom_styles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-    <title>Szczegóły bloga</title>
+    <title>Blog details</title>
 </head>
 <body>
 <header>
@@ -25,17 +25,17 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj</a>
+                            <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item text-white">
-                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                            <a class="nav-link text-white" href="{% url 'edit_profile' %}">Hello, {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item text-white">
-                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                            <a class="nav-link login-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                            <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -46,39 +46,39 @@
 <main>
     <div class="background-image">
     <div class="container">
-        <h2>Szczegóły bloga</h2>
+        <h2>Blog details</h2>
         <h3>{{ blog.title }}</h3>
         <p>{{ blog.description }}</p>
-        <p>Właściciel: {{ blog.owner }}</p>
-        <p>Data utworzenia: {{ blog.date_of_creation }}</p>
+        <p>Owner: {{ blog.owner }}</p>
+        <p>Date of creation: {{ blog.date_of_creation }}</p>
 
         {% if request.user == blog.owner %}
-            <a href="{% url 'edit_blog' blog_id=blog.id %}" class="btn btn-primary">Edytuj blog</a>
-            <a href="{% url 'delete_blog' blog_id=blog.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten blog?')">Usuń blog</a>
+            <a href="{% url 'edit_blog' blog_id=blog.id %}" class="btn btn-primary">Edit blog</a>
+            <a href="{% url 'delete_blog' blog_id=blog.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this post?')">Delete blog</a>
         {% endif %}
 
         <div class="container_button">
-            <a href="{% url 'add_post' blog_id=blog.id %}" class="btn btn-success">Dodaj Post</a>
+            <a href="{% url 'add_post' blog_id=blog.id %}" class="btn btn-success">Add post</a>
         </div>
 
-        <h3>Filtruj posty według tagów:</h3>
+        <h3>Filter posts by tags:</h3>
         <form method="get" action=".">
             <select name="tag" onchange="this.form.submit()">
-                <option value="">Wszystkie tagi</option>
+                <option value="">All tags</option>
                 {% for tag in tags %}
                     <option value="{{ tag.id }}" {% if request.GET.tag == tag.id|stringformat:"s" %}selected{% endif %}>{{ tag.name }}</option>
                 {% endfor %}
             </select>
         </form>
 
-        <h3>Posty:</h3>
+        <h3>Posts:</h3>
         <ul>
             {% for post in posts %}
                 <li>
                     <h4><a href="{% url 'post_details' post.id %}">{{ post.title }}</a></h4>
                     <p>{{ post.content }}</p>
-                    <p>Autor: {{ post.author }}</p>
-                    <p>Data dodania: {{ post.date_of_creation }}</p>
+                    <p>Owner: {{ post.author }}</p>
+                    <p>Date of creation: {{ post.date_of_creation }}</p>
                     {% if post.image %}
                         <td>
                             <img src="{{ post.image.url }}" alt="">
@@ -86,12 +86,12 @@
 
                     {% endif %}
                     {% if request.user == post.author %}
-                        <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edytuj post</a>
-                        <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Czy na pewno chcesz usunąć ten post?')">Usuń post</a>
+                        <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edit post</a>
+                        <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this post?')">Delete post</a>
                     {% endif %}
                 </li>
             {% empty %}
-                <li>Brak postów.</li>
+                <li>Posts unveavaible.</li>
             {% endfor %}
         </ul>
     </div>

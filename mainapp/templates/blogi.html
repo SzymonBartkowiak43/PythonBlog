@@ -6,7 +6,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/blogi.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-    <title>Lista Blogów</title>
+    <title>List of blogs</title>
 </head>
 <body>
 <header>
@@ -22,17 +22,17 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj</a>
+                            <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item text-white">
-                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                            <a class="nav-link text-white" href="{% url 'edit_profile' %}">Hello, {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item text-white">
-                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                            <a class="nav-link login-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                            <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -44,7 +44,7 @@
 <main>
     <div class="background-image">
         <div class="blogs_container">
-            <h1>Lista Blogów</h1>
+            <h1>List of blogs</h1>
             <ul>
                 {% for blog in blogs %}
                     <li>
@@ -52,7 +52,7 @@
                         <p>{{ blog.description }}</p>
                     </li>
                 {% empty %}
-                    <li>Brak dostępnych blogów.</li>
+                    <li>No blogs available.</li>
                 {% endfor %}
             </ul>
         </div>

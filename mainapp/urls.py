@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import edit_profile
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
@@ -18,4 +19,5 @@ urlpatterns = [
     path('post/<int:post_id>/delete/', views.PostDeleteView, name='delete_post'),
     path('comment/<int:comment_id>/edit/', views.CommentEditView, name='edit_comment'),
     path('comment/<int:comment_id>/delete/', views.CommentDeleteView, name='delete_comment'),
+    path('edit_profile/', edit_profile, name='edit_profile'),
 ]

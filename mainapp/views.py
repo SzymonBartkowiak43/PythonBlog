@@ -1,8 +1,10 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Post, Comment, Tag, PostTag
-from .forms import CustomUserCreationForm, BlogCreationForm, BlogEditForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
+from .forms import CustomUserCreationForm, BlogCreationForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 def homepage(request):
@@ -221,3 +223,25 @@ def CommentDeleteView(request, comment_id):
 
 def post_password(request, post_id):
     return render(request, 'post_password.html', {'post_id': post_id})
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(request.POST, instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user, request.POST)
+
+        if user_form.is_valid() and password_form.is_valid():
+            user_form.save()
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Twój profil został zaktualizowany pomyślnie')
+            return redirect('edit_profile')
+    else:
+        user_form = UserEditForm(instance=request.user)
+        password_form = CustomPasswordChangeForm(request.user)
+
+    return render(request, 'edit_profile.html', {
+        'user_form': user_form,
+        'password_form': password_form
+    })

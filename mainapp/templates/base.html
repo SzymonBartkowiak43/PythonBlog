@@ -7,14 +7,13 @@
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
-    <title>{% block title %}Mój Blog{% endblock %}</title>
+    <title>{% block title %}My blog{% endblock %}</title>
 </head>
 <body>
 
 <div id="bg">
     <video class="video-background" autoplay loop muted>
         <source src="{% static 'video/video_background.mp4' %}" type="video/mp4">
-        Twoja przeglądarka nie obsługuje znacznika wideo.
     </video>
 </div>
 <header>
@@ -32,17 +31,17 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'logout' %}">Wyloguj</a>
+                            <a class="nav-link text-white" href="{% url 'logout' %}">Logout</a>
                         </li>
                         <li class="nav-item text-white">
-                            <span class="nav-link text-white font-weight-bold">Witaj, {{ user.username }}</span>
+                            <a class="nav-link text-white" href="{% url 'edit_profile' %}">Hello, {{ user.username }}</a>
                         </li>
                     {% else %}
                         <li class="nav-item text-white">
-                            <a class="nav-link login-link" href="{% url 'login' %}">Logowanie</a>
+                            <a class="nav-link login-link" href="{% url 'login' %}">Login</a>
                         </li>
                         <li class="nav-item text-white">
-                            <a class="nav-link text-white" href="{% url 'register' %}">Rejestracja</a>
+                            <a class="nav-link text-white" href="{% url 'register' %}">Register</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -50,8 +49,8 @@
         </div>
     </nav>
     <div class="container_button">
-        <a class="button_1" href="{% url 'utworz_blog' %}" >Stwórz swój blog</a>
-        <a class="button_2" href="{% url 'blogs' %}" >Zobacz wszystkie blogi</a>
+        <a class="button_1" href="{% url 'utworz_blog' %}" >Create your blog</a>
+        <a class="button_2" href="{% url 'blogs' %}" >See all blogs</a>
     </div>
 </header>
 <main>
