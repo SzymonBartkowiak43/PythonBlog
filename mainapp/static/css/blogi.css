@@ -18,6 +18,15 @@ header {
     z-index: 99;
 }
 
+.custom-logo {
+    width: 60px;
+    height: auto;
+    margin: -10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 nav {
     background-color: #a3153b;
     border-radius: 0 0 5px 5px;
