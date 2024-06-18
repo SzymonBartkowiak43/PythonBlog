@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Blog, Post, Comment, Tag, PostTag
-from .forms import CustomUserCreationForm, BlogCreationForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
+from .forms import CustomUserCreationForm, BlogCreationForm, CaptchaTestForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import logging
@@ -28,6 +28,8 @@ def register(request):
     return render(request, "register.html", {"form": form})
 
 
+
+
 def blogs(request):
     logger.info("Blogs view was called")
     blogs = Blog.objects.all()
@@ -37,6 +39,7 @@ def blogs(request):
 def login_view(request):
     logger.info("Login view was called")
     if request.method == 'POST':
+        captcha_form = CaptchaTestForm(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
@@ -48,7 +51,9 @@ def login_view(request):
             logger.warning(f"Failed login attempt for user {username}")
             return redirect('login')
     else:
-        return render(request, "login.html")
+        captcha_form = CaptchaTestForm()
+
+    return render(request, "login.html", {"captcha_form": captcha_form})
 
 
 @login_required
@@ -287,15 +292,19 @@ def edit_profile(request):
         user_form = UserEditForm(request.POST, instance=request.user)
         password_form = CustomPasswordChangeForm(request.user, request.POST)
 
-        if user_form.is_valid() and password_form.is_valid():
+        if user_form.is_valid():
             user_form.save()
-            user = password_form.save()
-            update_session_auth_hash(request, user)
             logger.info(f"User {request.user.username} updated their profile")
             messages.success(request, 'Twój profil został zaktualizowany pomyślnie')
             return redirect('edit_profile')
         else:
             logger.warning(f"Profile update failed for user {request.user.username}: form invalid")
+
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)  # Update session to prevent logout
+            messages.success(request, 'Twoje hasło zostało zmienione pomyślnie')
+            return redirect('edit_profile')
     else:
         user_form = UserEditForm(instance=request.user)
         password_form = CustomPasswordChangeForm(request.user)

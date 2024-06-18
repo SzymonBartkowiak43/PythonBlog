@@ -3,8 +3,14 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Blog, Post, Comment, Tag, PostTag
-import io
+from captcha.fields import CaptchaField
 logger = logging.getLogger(__name__)
+
+
+
+class CaptchaTestForm(forms.Form):
+    captcha = CaptchaField()
+
 
 
 class CustomUserCreationForm(UserCreationForm):
