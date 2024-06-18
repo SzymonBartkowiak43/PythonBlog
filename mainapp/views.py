@@ -5,37 +5,47 @@ from .models import Blog, Post, Comment, Tag, PostTag
 from .forms import CustomUserCreationForm, BlogCreationForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+import logging
 
+logger = logging.getLogger('myapp')
 
 def homepage(request):
+    logger.info("Homepage view was called")
     return render(request, "home.html")
 
 
 def register(request):
+    logger.info("Register view was called")
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
+            logger.info("New user registered")
             return redirect('login')
     else:
         form = CustomUserCreationForm()
+        logger.warning("User registration failed: form invalid")
     return render(request, "register.html", {"form": form})
 
 
 def blogs(request):
+    logger.info("Blogs view was called")
     blogs = Blog.objects.all()
     return render(request, 'blogi.html', {'blogs': blogs})
 
 
 def login_view(request):
+    logger.info("Login view was called")
     if request.method == 'POST':
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            logger.info(f"User {username} logged in successfully")
             return redirect('homepage')
         else:
+            logger.warning(f"Failed login attempt for user {username}")
             return redirect('login')
     else:
         return render(request, "login.html")
@@ -43,13 +53,17 @@ def login_view(request):
 
 @login_required
 def BlogCreationView(request):
+    logger.info("BlogCreationView was called")
     if request.method == "POST":
         form = BlogCreationForm(request.POST)
         if form.is_valid():
             blog = form.save(commit=False)
             blog.owner = request.user
             blog.save()
+            logger.info(f"Blog created by user {request.user.username}")
             return redirect('homepage')
+        else:
+            logger.warning("Blog creation failed: form invalid")
     else:
         form = BlogCreationForm()
     return render(request, "utworz_blog.html", {"form": form})
@@ -57,15 +71,20 @@ def BlogCreationView(request):
 
 @login_required
 def BlogEditView(request, blog_id):
+    logger.info(f"BlogEditView was called for blog_id {blog_id}")
     blog = get_object_or_404(Blog, pk=blog_id)
     if request.user != blog.owner:
+        logger.warning(f"Unauthorized blog edit attempt by user {request.user.username}")
         return redirect('homepage')
 
     if request.method == 'POST':
         form = BlogEditForm(request.POST, instance=blog)
         if form.is_valid():
             form.save()
+            logger.info(f"Blog {blog_id} edited by user {request.user.username}")
             return redirect('blog_details', blog_id=blog_id)
+        else:
+            logger.warning(f"Blog edit failed for blog_id {blog_id}: form invalid")
     else:
         form = BlogEditForm(instance=blog)
     return render(request, 'edit_blog.html', {'form': form, 'blog': blog})
@@ -73,14 +92,19 @@ def BlogEditView(request, blog_id):
 
 @login_required
 def BlogDeleteView(request, blog_id):
+    logger.info(f"BlogDeleteView was called for blog_id {blog_id}")
     blog = get_object_or_404(Blog, pk=blog_id)
     if request.user == blog.owner:
         blog.delete()
+        logger.info(f"Blog {blog_id} deleted by user {request.user.username}")
+    else:
+        logger.warning(f"Unauthorized blog delete attempt by user {request.user.username}")
     return redirect('blogs')
 
 
 @login_required
 def blog_details(request, blog_id):
+    logger.info(f"Blog details view was called for blog_id {blog_id}")
     blog = get_object_or_404(Blog, pk=blog_id)
     posts = Post.objects.filter(blog=blog)
 
@@ -95,14 +119,18 @@ def blog_details(request, blog_id):
 
 
 def logout_view(request):
+    logger.info("Logout view was called")
     logout(request)
+    logger.info(f"User {request.user.username} logged out")
     return redirect('homepage')
 
 
 @login_required
 def add_post(request, blog_id):
+    logger.info(f"Add post view was called for blog_id {blog_id}")
     blog = get_object_or_404(Blog, pk=blog_id)
     if request.user != blog.owner:
+        logger.warning(f"Unauthorized add post attempt by user {request.user.username}")
         return redirect('homepage')
 
     if request.method == 'POST':
@@ -124,8 +152,10 @@ def add_post(request, blog_id):
                 for name in new_tag_names:
                     tag, created = Tag.objects.get_or_create(name=name)
                     PostTag.objects.create(post=post, tag=tag)
-
+            logger.info(f"Post created by user {request.user.username} in blog {blog_id}")
             return redirect('blog_details', blog_id=blog_id)
+        else:
+            logger.warning(f"Post creation failed for blog_id {blog_id}: form invalid")
     else:
         form = PostCreationForm()
     return render(request, 'add_post.html', {'form': form, 'blog': blog})
@@ -133,15 +163,20 @@ def add_post(request, blog_id):
 
 @login_required
 def PostEditView(request, post_id):
+    logger.info(f"PostEditView was called for post_id {post_id}")
     post = get_object_or_404(Post, pk=post_id)
     if request.user != post.author:
+        logger.warning(f"Unauthorized post edit attempt by user {request.user.username}")
         return redirect('homepage')
 
     if request.method == 'POST':
         form = PostEditForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
+            logger.info(f"Post {post_id} edited by user {request.user.username}")
             return redirect('post_details', post_id=post_id)
+        else:
+            logger.warning(f"Post edit failed for post_id {post_id}: form invalid")
     else:
         form = PostEditForm(instance=post)
     return render(request, 'edit_post.html', {'form': form, 'post': post})
@@ -149,13 +184,19 @@ def PostEditView(request, post_id):
 
 @login_required
 def PostDeleteView(request, post_id):
+    logger.info(f"PostDeleteView was called for post_id {post_id}")
     post = get_object_or_404(Post, pk=post_id)
     if request.user == post.author:
         post.delete()
-    return redirect('blog_details', blog_id=post.blog.id)
+        logger.info(f"Post {post_id} deleted by user {request.user.username}")
+        return redirect('blog_details', blog_id=post.blog.id)
+    else:
+        logger.warning(f"Unauthorized post delete attempt by user {request.user.username}")
+    return redirect('homepage')
 
 
 def post_details(request, post_id):
+    logger.info(f"Post details view was called for post_id {post_id}")
     post = get_object_or_404(Post, pk=post_id)
     comments = post.comments.order_by('date_of_creation')
     form = CommentCreationForm()
@@ -172,8 +213,11 @@ def post_details(request, post_id):
                 password = request.POST.get('password')
                 if password == post.password:
                     request.session[f'post_{post_id}_password_verified'] = True
+                    logger.info(f"Password verified for private post {post_id} by user {request.user.username}")
                     return redirect('post_details', post_id=post_id)
                 else:
+                    logger.warning(
+                        f"Incorrect password attempt for private post {post_id} by user {request.user.username}")
                     return render(request, 'post_password.html', {'post_id': post_id, 'error': 'Incorrect password'})
             else:
                 return render(request, 'post_password.html', {'post_id': post_id})
@@ -186,7 +230,10 @@ def post_details(request, post_id):
             comment.author = request.user
             comment.post = post
             comment.save()
+            logger.info(f"Comment added to post {post_id} by user {request.user.username}")
             return redirect('post_details', post_id=post_id)
+        else:
+            logger.warning(f"Comment creation failed for post {post_id}: form invalid")
 
     return render(request, 'post_details.html', {
         'post': post, 'comments': comments, 'form': form
@@ -197,15 +244,20 @@ def post_details(request, post_id):
 
 @login_required
 def CommentEditView(request, comment_id):
+    logger.info(f"CommentEditView was called for comment_id {comment_id}")
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user != comment.author:
+        logger.warning(f"Unauthorized comment edit attempt by user {request.user.username}")
         return redirect('homepage')
 
     if request.method == 'POST':
         form = CommentEditForm(request.POST, request.FILES, instance=comment)
         if form.is_valid():
             form.save()
+            logger.info(f"Comment {comment_id} edited by user {request.user.username}")
             return redirect('post_details', post_id=comment.post.id)
+        else:
+            logger.warning(f"Comment edit failed for comment_id {comment_id}: form invalid")
     else:
         form = CommentEditForm(instance=comment)
     return render(request, 'edit_comment.html', {'form': form, 'comment': comment})
@@ -213,20 +265,24 @@ def CommentEditView(request, comment_id):
 
 @login_required
 def CommentDeleteView(request, comment_id):
+    logger.info(f"CommentDeleteView was called for comment_id {comment_id}")
     comment = get_object_or_404(Comment, pk=comment_id)
     if request.user == comment.author:
         post_id = comment.post.id
         comment.delete()
+        logger.info(f"Comment {comment_id} deleted by user {request.user.username}")
         return redirect('post_details', post_id=post_id)
     return redirect('homepage')
 
 
 def post_password(request, post_id):
+    logger.info(f"Post password view was called for post_id {post_id}")
     return render(request, 'post_password.html', {'post_id': post_id})
 
 
 @login_required
 def edit_profile(request):
+    logger.info(f"Edit profile view was called by user {request.user.username}")
     if request.method == 'POST':
         user_form = UserEditForm(request.POST, instance=request.user)
         password_form = CustomPasswordChangeForm(request.user, request.POST)
@@ -235,8 +291,11 @@ def edit_profile(request):
             user_form.save()
             user = password_form.save()
             update_session_auth_hash(request, user)
+            logger.info(f"User {request.user.username} updated their profile")
             messages.success(request, 'Twój profil został zaktualizowany pomyślnie')
             return redirect('edit_profile')
+        else:
+            logger.warning(f"Profile update failed for user {request.user.username}: form invalid")
     else:
         user_form = UserEditForm(instance=request.user)
         password_form = CustomPasswordChangeForm(request.user)

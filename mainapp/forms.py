@@ -1,8 +1,10 @@
+import logging
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Blog, Post, Comment, Tag, PostTag
-
+import io
+logger = logging.getLogger(__name__)
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -24,6 +26,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if User.objects.filter(email=email).exists():
+            logger.warning(f"Email {email} is already in use")
             raise forms.ValidationError("This email is already in use.")
         return email
 
@@ -31,6 +34,7 @@ class CustomUserCreationForm(UserCreationForm):
 class BlogCreationForm(forms.ModelForm):
     class Meta:
         model = Blog
+        logger.info(f"Blog edited")
         fields = ('title', 'description')
 
 
@@ -60,17 +64,20 @@ class PostCreationForm(forms.ModelForm):
         instance = super().save(commit=False)
         if commit:
             instance.save()
+            logger.info(f"Post '{instance.title}' created")
             tags = self.cleaned_data['tags']
             new_tags = self.cleaned_data['new_tags']
 
             for tag in tags:
                 PostTag.objects.create(post=instance, tag=tag)
+                logger.debug(f"Tag '{tag.name}' added to post '{instance.title}'")
 
             if new_tags:
                 new_tag_names = [tag.strip() for tag in new_tags.split(',')]
                 for name in new_tag_names:
                     tag, created = Tag.objects.get_or_create(name=name)
                     PostTag.objects.create(post=instance, tag=tag)
+                    logger.debug(f"New tag '{name}' added to post '{instance.title}'")
             self.save_m2m()
         return instance
 
@@ -99,14 +106,17 @@ class PostEditForm(forms.ModelForm):
         if commit:
             instance.save()
             PostTag.objects.filter(post=instance).delete()
+            logger.info(f"Post '{instance.title}' edited")
             for tag in tags:
                 PostTag.objects.create(post=instance, tag=tag)
+                logger.debug(f"Tag '{tag.name}' added to post '{instance.title}'")
 
             if new_tags:
                 new_tag_names = [tag.strip() for tag in new_tags.split(',')]
                 for name in new_tag_names:
                     tag, created = Tag.objects.get_or_create(name=name)
                     PostTag.objects.create(post=instance, tag=tag)
+                    logger.debug(f"New tag '{name}' added to post '{instance.title}'")
             self.save_m2m()
         return instance
 
