@@ -7,9 +7,47 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 import logging
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
+import io
+import logging
+import os
 
 logger = logging.getLogger('myapp')
 
+
+def generate_pdf(request):
+    buffer = io.BytesIO()  # Tworzymy bufor do przechowywania danych PDF-a
+
+    # Tworzymy nowy dokument PDF w buforze
+    p = canvas.Canvas(buffer, pagesize=letter)
+    p.drawString(100, 750, "Logi z aplikacji")  # Dodajemy tytuł dokumentu
+
+    # Otwieramy plik z logami
+    log_file_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'debug.log'))
+    try:
+        with open(log_file_path, 'r') as log_file:
+            logs = log_file.readlines()
+            y = 700  # Początkowa pozycja Y dla tekstu
+
+            for log in logs:
+                if y < 50:  # Jeżeli dotrzemy do końca strony, dodajemy nową stronę
+                    p.showPage()
+                    y = 750  # Reset pozycji Y dla nowej strony
+                    p.drawString(100, 750, "")  # Tytuł na nowej stronie
+
+                p.drawString(100, y, log.strip())
+                y -= 20  # Przesunięcie pozycji Y dla kolejnego wiersza tekstu
+    except FileNotFoundError:
+        logger.error(f"File not found: {log_file_path}")
+        p.drawString(100, 700, "Log file not found.")
+
+    p.showPage()
+    p.save()
+
+    buffer.seek(0)
+    return HttpResponse(buffer.getvalue(), content_type='application/pdf')
 def homepage(request):
     logger.info("Homepage view was called")
     return render(request, "home.html")

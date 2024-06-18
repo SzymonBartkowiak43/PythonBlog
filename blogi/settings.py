@@ -145,13 +145,13 @@ LOGGING = {
     },
     'handlers': {
         'file': {
-            'level': 'WARNING',
+            'level': 'INFO',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'debug.log'),
             'formatter': 'verbose',
         },
         'console': {
-            'level': 'INFO',
+            'level': 'WARNING',
             'class': 'logging.StreamHandler',
             'formatter': 'simple',
         },
