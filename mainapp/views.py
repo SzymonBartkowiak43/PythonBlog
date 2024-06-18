@@ -41,20 +41,33 @@ def blogs(request):
     return render(request, 'blogi.html', {'blogs': blogs})
 
 
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import CaptchaTestForm
+import logging
+
+logger = logging.getLogger(__name__)
+
 def login_view(request):
     logger.info("Login view was called")
     if request.method == 'POST':
         captcha_form = CaptchaTestForm(request.POST)
         username = request.POST["username"]
         password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            logger.info(f"User {username} logged in successfully")
-            return redirect('homepage')
+
+        if captcha_form.is_valid():
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                logger.info(f"User {username} logged in successfully")
+                return redirect('homepage')
+            else:
+                logger.warning(f"Failed login attempt for user {username}")
+                messages.error(request, "Invalid username or password.")
         else:
-            logger.warning(f"Failed login attempt for user {username}")
-            return redirect('login')
+            logger.warning("Captcha validation failed")
+
     else:
         captcha_form = CaptchaTestForm()
 
