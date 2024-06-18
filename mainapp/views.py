@@ -1,10 +1,11 @@
 from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from .models import Blog, Post, Comment, Tag, PostTag
 from .forms import CustomUserCreationForm, BlogCreationForm, CaptchaTestForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 import logging
 
 logger = logging.getLogger('myapp')
@@ -21,8 +22,20 @@ def register(request):
         captcha_form = CaptchaTestForm(request.POST)
 
         if user_form.is_valid() and captcha_form.is_valid():
-            user_form.save()
+            user = user_form.save()
             logger.info("New user registered")
+
+            # Wyślij e-mail powitalny
+            subject = 'Welcome to Our Site'
+            message = f'Hi {user.first_name}, thank you for registering at our site.'
+            recipient_list = [user.email]
+
+            try:
+                send_mail(subject, message, settings.EMAIL_HOST_USER, recipient_list, fail_silently=False)
+                logger.info(f"Welcome email sent to {user.email}")
+            except Exception as e:
+                logger.error(f"Failed to send welcome email to {user.email}: {e}")
+
             return redirect('login')
         else:
             logger.warning("User registration failed: form invalid")
@@ -40,14 +53,6 @@ def blogs(request):
     blogs = Blog.objects.all()
     return render(request, 'blogi.html', {'blogs': blogs})
 
-
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from .forms import CaptchaTestForm
-import logging
-
-logger = logging.getLogger(__name__)
 
 def login_view(request):
     logger.info("Login view was called")
