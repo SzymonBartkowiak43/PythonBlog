@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/edit_profile.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/darkly/bootstrap.min.css" integrity="sha384-nNK9n28pDUDDgIiIqZ/MiyO3F4/9vsMtReZK39klb/MtkZI3/LtjSjlmyVPS3KdN" crossorigin="anonymous">
     <title>Edytuj Profil</title>
 </head>
 <body>
 
+
 <div id="bg">
     <video class="video-background" autoplay loop muted>
         <source src="{% static 'video/video_background.mp4' %}" type="video/mp4">
     </video>
 </div>
+
 <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
         <div class="container-fluid">
@@ -39,25 +41,23 @@
     </nav>
 </header>
 <main>
+    <div class="background-image">
     <div class="container mt-5">
-        <h1>Edit Profile</h1>
-        <form method="POST">
+        <form class="form-with-validation" method="POST">
+            <h1>Edit Profile</h1>
             {% csrf_token %}
             <h2>User Information</h2>
             {{ user_form.as_p }}
             <button type="submit" class="btn btn-primary">Save changes</button>
         </form>
-        <h2>Change password</h2>
-        <form method="POST">
+        <form class="form-with-validation2" method="POST">
+            <h3>Change password</h3>
             {% csrf_token %}
             {{ password_form.as_p }}
             <button type="submit" class="btn btn-primary">Change password</button>
         </form>
     </div>
+    </div>    
 </main>
-<footer class="footer">
-    <p>Copyright © 2024 Cezary Babik, Szymon Bartkowiak, Bartosz Godlewski</p>
-</footer>
-
 </body>
 </html>
