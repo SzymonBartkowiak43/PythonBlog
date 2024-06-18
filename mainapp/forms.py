@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from .models import Blog, Post, Comment, Tag, PostTag
-from captcha.fields import CaptchaField
 
 from django import forms
 from captcha.fields import CaptchaField
