@@ -90,7 +90,6 @@ nav a {
     animation: fadeIn 2s ease-in-out;
     text-transform: uppercase;
     margin-top: 380px;
-    margin-right: 20px;
     border: 1px solid #FFFFFF;
     transition: background-color 0.5s ease;
     transition: margin 0.5s ease;
@@ -99,7 +98,7 @@ nav a {
 
 .button_2{
     margin-left: 60px;
-    margin-right: -80px;
+    margin-right: 60px;
 }
 
 .button_1:hover,
