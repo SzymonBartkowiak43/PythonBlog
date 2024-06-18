@@ -35,8 +35,8 @@
     <div class="form-container">
         <form class="form-with-validation" action="/register/" method="post">
             {% csrf_token %}
-            <h1>Create your account</h1>
             {{ form.as_p }}
+            {{ captcha_form.as_p }}
             <button class="btn btn-primary form-submit" type="submit">Confirm</button>
         </form>
     </div>
