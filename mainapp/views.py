@@ -17,15 +17,20 @@ def homepage(request):
 def register(request):
     logger.info("Register view was called")
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+        user_form = CustomUserCreationForm(request.POST)
+        captcha_form = CaptchaTestForm(request.POST)
+
+        if user_form.is_valid() and captcha_form.is_valid():
+            user_form.save()
             logger.info("New user registered")
             return redirect('login')
+        else:
+            logger.warning("User registration failed: form invalid")
     else:
-        form = CustomUserCreationForm()
-        logger.warning("User registration failed: form invalid")
-    return render(request, "register.html", {"form": form})
+        user_form = CustomUserCreationForm()
+        captcha_form = CaptchaTestForm()
+
+    return render(request, "register.html", {"form": user_form, "captcha_form": captcha_form})
 
 
 
