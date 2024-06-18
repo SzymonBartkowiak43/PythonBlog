@@ -50,9 +50,9 @@
         <p>Owner: {{ blog.owner }}</p>
         <p>Date of creation: {{ blog.date_of_creation }}</p>
 
-        {% if request.user == blog.owner %}
+        {% if user.is_superuser or user == blog.owner %}
             <a href="{% url 'edit_blog' blog_id=blog.id %}" class="btn btn-primary">Edit blog</a>
-            <a href="{% url 'delete_blog' blog_id=blog.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this post?')">Delete blog</a>
+            <a href="{% url 'delete_blog' blog_id=blog.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this blog?')">Delete blog</a>
         {% endif %}
 
         <div class="container_button">
@@ -83,7 +83,7 @@
                         </td>
 
                     {% endif %}
-                    {% if request.user == post.author %}
+                    {% if user.is_superuser or user == blog.owner %}
                         <a href="{% url 'edit_post' post_id=post.id %}" class="btn btn-primary">Edit post</a>
                         <a href="{% url 'delete_post' post_id=post.id %}" class="btn btn-danger" onclick="return confirm('Are you sure want to delete this post?')">Delete post</a>
                     {% endif %}

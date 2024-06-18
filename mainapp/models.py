@@ -4,9 +4,8 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    age = models.IntegerField()
     date_of_registration = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=255)
+
 class Blog(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     date_of_creation = models.DateTimeField(auto_now_add=True)
