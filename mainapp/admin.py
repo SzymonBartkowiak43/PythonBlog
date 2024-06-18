@@ -1,16 +1,14 @@
 from django.contrib import admin
-from .models import Post,Comment,Profile,Tag,PostTag,Blog, SearchHistory
-
-
+from django.utils.html import format_html
+from .models import Post, Comment, Profile, Tag, PostTag, Blog, SearchHistory
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ('user', 'age', 'date_of_registration', 'role')
-    search_fields = ('user__username', 'role')
-    list_filter = ('role',)
+    list_display = ('user', 'date_of_registration')
+    search_fields = ('user__username',)
     fieldsets = (
         (None, {
-            'fields': ('user', 'age', 'role')
+            'fields': ('user',)
         }),
         ('Dates', {
             'fields': ('date_of_registration',),
@@ -18,6 +16,7 @@ class ProfileAdmin(admin.ModelAdmin):
         }),
     )
     readonly_fields = ('date_of_registration',)
+
 
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('owner', 'title', 'date_of_creation')
@@ -32,19 +31,26 @@ class BlogAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'author', 'date_of_creation', 'blog')
+    list_display = ('title', 'author', 'date_of_creation', 'blog', 'image_tag')
     search_fields = ('title', 'author__username', 'blog__title')
     list_filter = ('date_of_creation', 'blog')
     fieldsets = (
         (None, {
-            'fields': ('title', 'content', 'author', 'blog')
+            'fields': ('title', 'content', 'author', 'blog', 'image')
         }),
         ('Optional Fields', {
             'classes': ('collapse',),
-            'fields': ('password', 'image')
+            'fields': ('password',)
         }),
     )
     readonly_fields = ('date_of_creation',)
+
+    def image_tag(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" style="width: 50px; height: 50px;" />'.format(obj.image.url))
+        return "-"
+    image_tag.short_description = 'Image'
+
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('post', 'author', 'date_of_creation', 'content')
@@ -52,18 +58,22 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('date_of_creation',)
     readonly_fields = ('date_of_creation',)
 
+
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name',)
     search_fields = ('name',)
+
 
 class PostTagAdmin(admin.ModelAdmin):
     list_display = ('post', 'tag')
     search_fields = ('post__title', 'tag__name')
 
+
 class SearchHistoryAdmin(admin.ModelAdmin):
     list_display = ('user', 'search_query', 'date_of_search')
     search_fields = ('user__username', 'search_query')
     list_filter = ('date_of_search',)
+
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Blog, BlogAdmin)

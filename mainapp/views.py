@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout, update_session_auth
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Blog, Post, Comment, Tag, PostTag
 from .forms import CustomUserCreationForm, BlogCreationForm, CaptchaTestForm, BlogEditForm, UserEditForm, CustomPasswordChangeForm, PostCreationForm, PostEditForm, CommentCreationForm, CommentEditForm
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
@@ -122,7 +122,7 @@ def BlogEditView(request, blog_id):
 def BlogDeleteView(request, blog_id):
     logger.info(f"BlogDeleteView was called for blog_id {blog_id}")
     blog = get_object_or_404(Blog, pk=blog_id)
-    if request.user == blog.owner:
+    if request.user == blog.owner or request.user.is_superuser:
         blog.delete()
         logger.info(f"Blog {blog_id} deleted by user {request.user.username}")
     else:
@@ -214,7 +214,7 @@ def PostEditView(request, post_id):
 def PostDeleteView(request, post_id):
     logger.info(f"PostDeleteView was called for post_id {post_id}")
     post = get_object_or_404(Post, pk=post_id)
-    if request.user == post.author:
+    if request.user == post.author or request.user.is_superuser:
         post.delete()
         logger.info(f"Post {post_id} deleted by user {request.user.username}")
         return redirect('blog_details', blog_id=post.blog.id)
@@ -295,7 +295,7 @@ def CommentEditView(request, comment_id):
 def CommentDeleteView(request, comment_id):
     logger.info(f"CommentDeleteView was called for comment_id {comment_id}")
     comment = get_object_or_404(Comment, pk=comment_id)
-    if request.user == comment.author:
+    if request.user == comment.author or request.user.is_superuser:
         post_id = comment.post.id
         comment.delete()
         logger.info(f"Comment {comment_id} deleted by user {request.user.username}")
