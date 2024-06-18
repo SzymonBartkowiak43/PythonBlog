@@ -4,6 +4,7 @@ from .views import edit_profile
 
 urlpatterns = [
     path("", views.homepage, name="homepage"),
+    path('generate_pdf/', views.generate_pdf, name='generate_pdf'),
     path('register/', views.register, name='register'),
     path('login/', views.login_view, name='login'),
     path('crtblog/', views.BlogCreationView, name='utworz_blog'),
